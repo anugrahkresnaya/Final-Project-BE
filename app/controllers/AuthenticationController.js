@@ -2,6 +2,7 @@ const ApplicationController = require("./ApplicationController");
 const { ApiError, EmailNotRegisteredError, EmailAlreadyTakenError, InsufficientAccessError, NotFoundError, WrongPasswordError } = require("../errors");
 const { JWT_SIGNATURE_KEY } = require("../../config/application");
 const httpStatus = require('http-status');
+const imagekit = require('../lib/imageKitConfig')
 
 class AuthenticationController extends ApplicationController {
   constructor({
@@ -136,7 +137,86 @@ class AuthenticationController extends ApplicationController {
       accessToken,
     })
   }
+  handleUpdateUser = async (req, res) => {
+    try {
+        const {
+          noKtp,
+          username,
+          name,
+          gender,
+          dateOfBirth,
+          address,
+          photoProfile,
+        } = req.body;
+        const id = req.params.id;
+        if(req.file != null){
+          const imageName = req.file.originalname
+          // upload file 
+          const img = await imagekit.upload({
+              file: req.file.buffer,
+              fileName: imageName,
+            })
+          await this.userModel.update({
+            noKtp,
+            username,
+            name,
+            gender,
+            dateOfBirth,
+            address,
+            photoProfile : img.url,
+        },{
+            where:{id}
+        });
+        res.status(200).json({
+          'status': 'success update',
+          'data': {
+            noKtp,
+            username,
+            name,
+            gender,
+            dateOfBirth,
+            address,
+            photoProfile :img.url,
+          }
+      })
+        }else{
+          await this.userModel.update({
+            noKtp,
+            username,
+            name,
+            gender,
+            dateOfBirth,
+            address,
+            photoProfile,
 
+        },{
+            where:{id}
+        });
+        res.status(200).json({
+          'status': 'success update',
+          'data': {
+            noKtp,
+            username,
+            name,
+            gender,
+            dateOfBirth,
+            address,
+            photoProfile,
+          }
+        })
+        }
+
+    }
+
+    catch(err) {
+      res.status(422).json({
+        error: {
+          name: err.name,
+          message: err.message,
+        }
+      });
+    }
+  }
   handleGetUser = async (req, res) => {
     const user = await this.userModel.findByPk(req.user.id);
 
