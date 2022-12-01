@@ -213,6 +213,49 @@ describe("AirportController", () => {
     });
   });
 
+  describe("#handleListAirport", () => {
+    it("should call res.status(200)", async () => {
+      const mockRequest = {};
+
+      const mockResponse = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+      };
+
+      const mockAirportList = [];
+
+      const mockAirport = {
+        'id': 1,
+        'name': 'Soekarno Hatta Airport',
+        'city': 'Jakarta',
+        'country': 'Indonesia',
+        'country_code': 'IDN',
+        'createdAt': '2022-11-17T05:11:01.429Z',
+        'updatedAt': '2022-11-17T05:11:01.429Z',
+      };
+
+      for (let i = 0; i < 10; i++) {
+        mockAirportList.push({
+          ...mockAirport,
+          id: i + 1,
+        });
+      }
+
+      const mockAirplaneModel = {
+        findAll: jest.fn().mockReturnValue(mockAirportList),
+      };
+
+      const airportController = new AirportController({
+        airportModel: mockAirplaneModel,
+      });
+      await airportController.handleListAirport(mockRequest, mockResponse);
+
+      expect(mockAirplaneModel.findAll).toHaveBeenCalled();
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith(mockAirportList);
+    });
+  });
+
   describe("#getAirportFromRequest", () => {
     it("should return airport id", async () => {
       const mockRequest = {
