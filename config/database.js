@@ -1,8 +1,8 @@
 const {
   DB_USER = "postgres",
-  DB_PASSWORD = "fendys",
+  DB_PASSWORD = "postgres",
   DB_NAME = "db_finalproject",
-  DB_HOST = "127.0.0.1",
+  DB_HOST = "localhost",
   DB_PORT = "5432",
 } = process.env;
 
