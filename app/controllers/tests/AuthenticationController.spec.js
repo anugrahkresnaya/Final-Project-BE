@@ -197,12 +197,9 @@ describe("AuthenticationController", () => {
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
-<<<<<<< HEAD
-=======
         message: expect.any(String),
         status: expect.any(String),
         user: expect.any(String)
->>>>>>> 19ec1a8 (Adding and Fixing Unit Testing on Authentication and API Error)
       });
     });
 
@@ -369,12 +366,9 @@ describe("AuthenticationController", () => {
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
-<<<<<<< HEAD
-=======
         message: expect.any(String),
         status: expect.any(String),
         user: expect.any(String)
->>>>>>> 19ec1a8 (Adding and Fixing Unit Testing on Authentication and API Error)
       });
     });
   });

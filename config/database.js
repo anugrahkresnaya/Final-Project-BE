@@ -1,10 +1,6 @@
 const {
   DB_USER = "postgres",
-<<<<<<< HEAD
   DB_PASSWORD = "postgres",
-=======
-  DB_PASSWORD = "fendys",
->>>>>>> 19ec1a8 (Adding and Fixing Unit Testing on Authentication and API Error)
   DB_NAME = "db_finalproject",
   DB_HOST = "localhost",
   DB_PORT = "5432",
