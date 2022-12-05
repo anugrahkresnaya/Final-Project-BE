@@ -4,6 +4,13 @@ class ApiError extends ApplicationError {
         super(message);
         this.statusCode = statusCode;
     }
+<<<<<<< HEAD
+=======
+
+    get details() {
+        return {statusCode: this.statusCode};
+      }
+>>>>>>> 19ec1a8 (Adding and Fixing Unit Testing on Authentication and API Error)
 }
 
 module.exports = ApiError;

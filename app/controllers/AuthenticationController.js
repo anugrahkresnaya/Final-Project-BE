@@ -101,6 +101,7 @@ class AuthenticationController extends ApplicationController {
       return;
     }
 
+<<<<<<< HEAD
     if (!email){
       const err = new ApiError(httpStatus.BAD_REQUEST, "email cannot be empty");
       res.status(422).json(err);
@@ -117,6 +118,8 @@ class AuthenticationController extends ApplicationController {
       return;
     }
 
+=======
+>>>>>>> 19ec1a8 (Adding and Fixing Unit Testing on Authentication and API Error)
     const role = await this.roleModel.findOne({
       where: { name: this.accessControl.CUSTOMER }
     });
