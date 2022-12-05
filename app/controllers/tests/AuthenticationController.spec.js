@@ -197,6 +197,9 @@ describe("AuthenticationController", () => {
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
+        message: expect.any(String),
+        status: expect.any(String),
+        user: expect.any(String)
       });
     });
 
@@ -363,6 +366,9 @@ describe("AuthenticationController", () => {
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
+        message: expect.any(String),
+        status: expect.any(String),
+        user: expect.any(String)
       });
     });
   });
