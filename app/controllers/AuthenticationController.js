@@ -168,8 +168,9 @@ class AuthenticationController extends ApplicationController {
           where: { id }
         });
         res.status(200).json({
-          'status': 'success update',
-          'data': {
+          status: 'success',
+          message: 'user updated successfully',
+          data: {
             noKtp,
             username,
             name,
@@ -193,8 +194,9 @@ class AuthenticationController extends ApplicationController {
           where: { id }
         });
         res.status(200).json({
-          'status': 'success update',
-          'data': {
+          status: 'success',
+          message: 'user updated successfully',
+          data: {
             noKtp,
             username,
             name,
@@ -234,7 +236,20 @@ class AuthenticationController extends ApplicationController {
       return;
     }
 
-    res.status(200).json(user);
+    res.status(200).json({
+      status: "success",
+      message: "get user data successful",
+      data : user,
+      });
+  }
+  handleListUser = async (req, res) => {
+    const users = await this.userModel.findAll()
+
+    res.status(200).json({
+      status: "success",
+      message: "get airports list successfull",
+      data : users,
+    });
   }
 
   createTokenFromUser = (user, role) => {

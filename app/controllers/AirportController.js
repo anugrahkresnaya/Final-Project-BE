@@ -22,7 +22,11 @@ class AirportController extends ApplicationController {
         country_code
       });
 
-      res.status(201).json(airport);
+      res.status(200).json({
+        status: "success",
+        message: "airport added successfully",
+        data : airport,
+      });
     } catch (error) {
       res.status(422).json({
         error: {
@@ -36,7 +40,11 @@ class AirportController extends ApplicationController {
   handleGetAirport = async (req, res) => {
     const airport = await this.getAirportFromRequest(req);
 
-    res.status(200).json(airport);
+    res.status(200).json({
+      status: "success",
+      message: "get airport data successfull",
+      data : airport,
+    });
   }
 
   handleUpdateAirport = async (req, res) => {
@@ -57,7 +65,11 @@ class AirportController extends ApplicationController {
         country_code
       });
 
-      res.status(200).json(airport);
+      res.status(200).json({
+        status: "success",
+        message: "airport updated successfully",
+        data : airport,
+      });
     } catch (err) {
       res.status(422).json({
         error: {
@@ -71,13 +83,21 @@ class AirportController extends ApplicationController {
   handleDeleteAirport = async (req, res) => {
     const airport = await this.getAirportFromRequest(req);
     await airport.destroy();
-    res.status(204).end();
+    res.status(200).json({
+      status: "success",
+      message: "airport deleted successfully",
+      data : airport,
+    });
   }
 
   handleListAirport = async (req, res) => {
     const airports = await this.airportModel.findAll()
 
-    res.status(200).json(airports)
+    res.status(200).json({
+      status: "success",
+      message: "get airports list successfull",
+      data : airports,
+    });
   }
 
   getAirportFromRequest(req) {

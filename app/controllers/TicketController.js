@@ -56,7 +56,11 @@ class TicketController extends ApplicationController {
   handleGetTicket = async (req, res) => {
     const ticket = await this.getTicketFromRequest(req);
 
-    res.status(200).json(ticket);
+    res.status(200).json({
+      status: "success",
+      message: "get ticket successful",
+      data : ticket,
+      });
   }
 
   handleUpdateTicket = async (req, res) => {
@@ -96,13 +100,20 @@ class TicketController extends ApplicationController {
     const ticket = await this.getTicketFromRequest(req);
     await ticket.destroy();
 
-    res.status(204).end();
+    res.status(200).json({
+      status: 'success',
+      message: 'Ticket data deleted successfully',
+    });
   }
 
   handleListTickets = async (req, res) => {
     const tickets = await this.ticketsModel.findAll();
 
-    res.status(200).json(tickets);
+    res.status(200).json({
+      status: "success",
+      message: "get ticket list successful",
+      data : tickets,
+      });
   }
 
   getTicketFromRequest(req) {
