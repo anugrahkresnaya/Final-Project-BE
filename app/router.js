@@ -7,13 +7,15 @@ const {
   AuthenticationController,
   UserController,
   AirportController,
-  AirplaneController
+  AirplaneController,
+  TicketController
 } = require("./controllers");
 const {
   User,
   Role,
   Airport,
-  Airplane
+  Airplane,
+  Tickets,
 } = require("./models");
 
 function apply(app) {
@@ -21,12 +23,14 @@ function apply(app) {
   const userModel = User;
   const airportModel = Airport;
   const airplaneModel = Airplane;
+  const ticketsModel = Tickets;
 
   const applicationController = new ApplicationController();
   const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel, });
   const userController = new UserController({ userModel });
   const airportController = new AirportController({ airportModel });
   const airplaneController = new AirplaneController({ airplaneModel });
+  const ticketController = new TicketController({ ticketsModel, airplaneModel, airportModel });
 
   const accessControl = authenticationController.accessControl;
 
@@ -43,6 +47,13 @@ function apply(app) {
   app.put("/api/v1/airplanes/:id", airplaneController.handleUpdateAirplane);
   app.delete("/api/v1/airplanes/:id", airplaneController.handleDeleteAirplane);
   app.get("/api/v1/airplanes", airplaneController.handleListAirplane);
+
+  app.post("/v1/tickets", ticketController.handleCreateTicket);
+  app.get("/v1/tickets/:id", ticketController.handleGetTicket);
+  app.put("/v1/tickets/:id", ticketController.handleUpdateTicket);
+  app.delete("/v1/tickets/:id", ticketController.handleDeleteTicket);
+  app.get("/v1/tickets", ticketController.handleListTickets);
+  //app.post("/v1/tickets/:id/order", ticketController.handleOrderTicket);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);
