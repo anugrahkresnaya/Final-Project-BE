@@ -24,7 +24,7 @@ class AuthenticationController extends ApplicationController {
     CUSTOMER: "CUSTOMER",
   }
 
-  authorize =(rolename) => {
+  authorize = (rolename) => {
     return (req, res, next) => {
       try {
         const token = req.headers.authorization?.split("Bearer ")[1];
@@ -36,7 +36,7 @@ class AuthenticationController extends ApplicationController {
         next();
       }
 
-      catch(err) {
+      catch (err) {
         res.status(401).json({
           error: {
             name: err.name,
@@ -54,7 +54,7 @@ class AuthenticationController extends ApplicationController {
       const password = req.body.password;
       const user = await this.userModel.findOne({
         where: { email, },
-        include: [{ model: this.roleModel, attributes: [ "id", "name", ], }]
+        include: [{ model: this.roleModel, attributes: ["id", "name",], }]
       });
 
       if (!user) {
@@ -81,7 +81,7 @@ class AuthenticationController extends ApplicationController {
       })
     }
 
-    catch(err) {
+    catch (err) {
       res.status(err.statusCode || 400).json({
         status: "FAIL",
         message: err.message,
@@ -101,17 +101,17 @@ class AuthenticationController extends ApplicationController {
       return;
     }
 
-    if (!email){
+    if (!email) {
       const err = new ApiError(httpStatus.BAD_REQUEST, "email cannot be empty");
       res.status(422).json(err);
       return;
-    } 
-    if (!name){
+    }
+    if (!name) {
       const err = new ApiError(httpStatus.BAD_REQUEST, "name cannot be empty");
       res.status(422).json(err);
       return;
     }
-    if (!password){
+    if (!password) {
       const err = new ApiError(httpStatus.BAD_REQUEST, "password cannot be empty");
       res.status(422).json(err);
       return;
@@ -126,7 +126,7 @@ class AuthenticationController extends ApplicationController {
       email,
       encryptedPassword: this.encryptPassword(password),
       roleId: role.id,
-    }) 
+    })
 
     const accessToken = this.createTokenFromUser(user, role);
 
@@ -139,33 +139,33 @@ class AuthenticationController extends ApplicationController {
   }
   handleUpdateUser = async (req, res) => {
     try {
-        const {
+      const {
+        noKtp,
+        username,
+        name,
+        gender,
+        dateOfBirth,
+        address,
+        photoProfile,
+      } = req.body;
+      const id = req.params.id;
+      if (req.file != null) {
+        const imageName = req.file.originalname
+        // upload file 
+        const img = await imagekit.upload({
+          file: req.file.buffer,
+          fileName: imageName,
+        })
+        await this.userModel.update({
           noKtp,
           username,
           name,
           gender,
           dateOfBirth,
           address,
-          photoProfile,
-        } = req.body;
-        const id = req.params.id;
-        if(req.file != null){
-          const imageName = req.file.originalname
-          // upload file 
-          const img = await imagekit.upload({
-              file: req.file.buffer,
-              fileName: imageName,
-            })
-          await this.userModel.update({
-            noKtp,
-            username,
-            name,
-            gender,
-            dateOfBirth,
-            address,
-            photoProfile : img.url,
-        },{
-            where:{id}
+          photoProfile: img.url,
+        }, {
+          where: { id }
         });
         res.status(200).json({
           'status': 'success update',
@@ -176,21 +176,21 @@ class AuthenticationController extends ApplicationController {
             gender,
             dateOfBirth,
             address,
-            photoProfile :img.url,
+            photoProfile: img.url,
           }
-      })
-        }else{
-          await this.userModel.update({
-            noKtp,
-            username,
-            name,
-            gender,
-            dateOfBirth,
-            address,
-            photoProfile,
+        })
+      } else {
+        await this.userModel.update({
+          noKtp,
+          username,
+          name,
+          gender,
+          dateOfBirth,
+          address,
+          photoProfile,
 
-        },{
-            where:{id}
+        }, {
+          where: { id }
         });
         res.status(200).json({
           'status': 'success update',
@@ -204,11 +204,11 @@ class AuthenticationController extends ApplicationController {
             photoProfile,
           }
         })
-        }
+      }
 
     }
 
-    catch(err) {
+    catch (err) {
       res.status(422).json({
         error: {
           name: err.name,
@@ -226,7 +226,7 @@ class AuthenticationController extends ApplicationController {
       return;
     }
 
-    const role = await this.roleModel.findByPk(user.roleId); 
+    const role = await this.roleModel.findByPk(user.roleId);
 
     if (!role) {
       const err = new NotFoundError(user.user.name);
