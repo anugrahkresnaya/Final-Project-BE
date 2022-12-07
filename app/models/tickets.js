@@ -31,12 +31,13 @@ module.exports = (sequelize, DataTypes) => {
     category: DataTypes.STRING,
     origin: DataTypes.STRING,
     destination: DataTypes.STRING,
-    createdBy: DataTypes.STRING,
+    createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Tickets',
+    paranoid: true
   });
   return Tickets;
 };

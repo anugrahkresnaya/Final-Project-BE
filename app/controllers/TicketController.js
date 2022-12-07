@@ -36,6 +36,7 @@ class TicketController extends ApplicationController {
         airplane_name: airplaneName,
         origin,
         destination,
+        createdBy: req.user.id,
       });
 
       res.status(201).json({
@@ -66,6 +67,8 @@ class TicketController extends ApplicationController {
         arrival_time,
         price,
         category,
+        origin,
+        destination,
       } = req.body;
 
       const ticket = await this.getTicketFromRequest(req);
@@ -75,6 +78,9 @@ class TicketController extends ApplicationController {
         arrival_time,
         price,
         category,
+        origin,
+        destination,
+        updatedBy: req.user.id
       });
 
       res.status(200).json({

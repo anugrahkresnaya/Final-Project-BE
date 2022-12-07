@@ -48,16 +48,15 @@ function apply(app) {
   app.delete("/api/v1/airplanes/:id", airplaneController.handleDeleteAirplane);
   app.get("/api/v1/airplanes", airplaneController.handleListAirplane);
 
-  app.post("/v1/tickets", ticketController.handleCreateTicket);
+  app.post("/v1/tickets", authenticationController.authorize(accessControl.ADMIN), ticketController.handleCreateTicket);
   app.get("/v1/tickets/:id", ticketController.handleGetTicket);
-  app.put("/v1/tickets/:id", ticketController.handleUpdateTicket);
-  app.delete("/v1/tickets/:id", ticketController.handleDeleteTicket);
+  app.put("/v1/tickets/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleUpdateTicket);
+  app.delete("/v1/tickets/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleDeleteTicket);
   app.get("/v1/tickets", ticketController.handleListTickets);
-  //app.post("/v1/tickets/:id/order", ticketController.handleOrderTicket);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);
-  app.get("/api/auth/user", authenticationController.authorize(accessControl.CUSTOMER), authenticationController.handleGetUser);
+  app.get("/api/auth/user", authenticationController.authorize(accessControl.CUSTOMER && accessControl.ADMIN), authenticationController.handleGetUser);
   app.put("/api/auth/update_user/:id", uploader.single("photoProfile"), authenticationController.handleUpdateUser);
 
   app.use(applicationController.handleNotFound);

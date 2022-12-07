@@ -35,15 +35,8 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: 'Air Japan',
-        code: 'AJX',
-        country: 'Japan',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: 'Japan Airlines',
-        code: 'JAL',
+        name: 'Lion Air',
+        code: 'LNI',
         country: 'Indonesia',
         createdAt: new Date(),
         updatedAt: new Date()
