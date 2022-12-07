@@ -77,6 +77,7 @@ class AuthenticationController extends ApplicationController {
         status: "OK",
         message: "Success Login",
         user: user.email,
+        role: user.Role.name,
         accessToken,
       })
     }
