@@ -46,20 +46,17 @@ function apply(app) {
   app.delete("/api/v1/airplanes/delete/:id", airplaneController.handleDeleteAirplane);
   app.get("/api/v1/airplanes", airplaneController.handleListAirplane);
 
-  app.post("/api/v1/tickets/add", ticketController.handleCreateTicket);
+  app.post("/api/v1/tickets/add", authenticationController.authorize(accessControl.ADMIN), ticketController.handleCreateTicket);
   app.get("/api/v1/tickets/:id", ticketController.handleGetTicket);
-  app.put("/api/v1/tickets/update/:id", ticketController.handleUpdateTicket);
-  app.delete("/api/v1/tickets/delete/:id", ticketController.handleDeleteTicket);
+  app.put("/api/v1/tickets/update/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleUpdateTicket);
+  app.delete("/api/v1/tickets/delete/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleDeleteTicket);
   app.get("/v1/tickets", ticketController.handleListTickets);
-  //app.post("/v1/tickets/:id/order", ticketController.handleOrderTicket);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);
-  app.get("/api/auth/user", authenticationController.authorize(accessControl.CUSTOMER), authenticationController.handleGetUser);
-  
+  app.get("/api/auth/user", authenticationController.authorize(accessControl.CUSTOMER && accessControl.ADMIN), authenticationController.handleGetUser);
   app.get("/api/v1/users", authenticationController.handleListUser);
   app.put("/api/v1/user/update/:id", uploader.single("photoProfile"), authenticationController.handleUpdateUser);
-  
 
   app.use(applicationController.handleNotFound);
   app.use(applicationController.handleError);
