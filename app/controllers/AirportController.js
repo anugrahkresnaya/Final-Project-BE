@@ -83,10 +83,10 @@ class AirportController extends ApplicationController {
   handleDeleteAirport = async (req, res) => {
     const airport = await this.getAirportFromRequest(req);
     await airport.destroy();
+    
     res.status(200).json({
-      status: "success",
-      message: "airport deleted successfully",
-      data : airport,
+      status: 'success',
+      message: 'airport data deleted successfully',
     });
   }
 

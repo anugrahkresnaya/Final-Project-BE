@@ -56,11 +56,6 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "roleId": {
-                          "type": "integer",
-                          "format": "int64",
-                          "example": 3
-                        },
                         "id": {
                           "type": "integer",
                           "format": "int64",
@@ -69,18 +64,6 @@
                         "name": {
                           "type": "string",
                           "example": "Rei"
-                        },
-                        "contact": {
-                          "type": "string",
-                          "example": 801928346
-                        },
-                        "address": {
-                          "type": "string",
-                          "example": "jl. anggrek no.00"
-                        },
-                        "photo": {
-                          "type": "string",
-                          "example": "https://res.cloudinary.com/dbuxups0z/image/upload/v1665242741/test/z45vzrf84pjditp6jh4a.jpg"
                         },
                         "email": {
                           "type": "string",
@@ -416,27 +399,39 @@
                           "format": "int64",
                           "example": 1
                         },
+                        "noKTP": {
+                          "type": "string",
+                          "example": 182745
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "Rei"
+                        },
                         "name": {
                           "type": "string",
                           "example": "Rei"
                         },
+                        "gender": {
+                          "type": "string",
+                          "example": "Pria"
+                        },
                         "contact": {
                           "type": "string",
-                          "example": 801928346
+                          "example": 812472134
                         },
-                        "address": {
+                        "dateOfBirth": {
                           "type": "string",
-                          "example": "jl. anggrek no.00"
+                          "example": "04-04-2002"
                         },
-                        "photo": {
+                        "photoProfile": {
                           "type": "string",
                           "example": "https://res.cloudinary.com/dbuxups0z/image/upload/v1665242741/test/z45vzrf84pjditp6jh4a.jpg"
                         },
                         "email": {
                           "type": "string",
-                          "example": "rei@mail.com"
+                          "example": "jl. anggrek no.00"
                         },
-                        "password": {
+                        "encryptedPassword": {
                           "type": "string",
                           "example": "$2b$10$bYPE07NwXnMGE8cqkunNKe/KBcme4HcEIRYoLDfd5wz2GkoX0RvcW"
                         },
@@ -491,7 +486,7 @@
                       "example": "Success"
                     },
                     "massage": {
-                      "example": "get user data successfull"
+                      "example": "get user list successfull"
                     },
                     "data": {
                       "type": "object",
@@ -506,27 +501,39 @@
                           "format": "int64",
                           "example": 1
                         },
+                        "noKTP": {
+                          "type": "string",
+                          "example": 182745
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "Rei"
+                        },
                         "name": {
                           "type": "string",
                           "example": "Rei"
                         },
+                        "gender": {
+                          "type": "string",
+                          "example": "Pria"
+                        },
                         "contact": {
                           "type": "string",
-                          "example": 801928346
+                          "example": 812472134
                         },
-                        "address": {
+                        "dateOfBirth": {
                           "type": "string",
-                          "example": "jl. anggrek no.00"
+                          "example": "04-04-2002"
                         },
-                        "photo": {
+                        "photoProfile": {
                           "type": "string",
                           "example": "https://res.cloudinary.com/dbuxups0z/image/upload/v1665242741/test/z45vzrf84pjditp6jh4a.jpg"
                         },
                         "email": {
                           "type": "string",
-                          "example": "rei@mail.com"
+                          "example": "jl. anggrek no.00"
                         },
-                        "password": {
+                        "encryptedPassword": {
                           "type": "string",
                           "example": "$2b$10$bYPE07NwXnMGE8cqkunNKe/KBcme4HcEIRYoLDfd5wz2GkoX0RvcW"
                         },
@@ -581,7 +588,7 @@
                       "example": "Success"
                     },
                     "massage": {
-                      "example": "user updated successfully"
+                      "example": "get user list successfull"
                     },
                     "data": {
                       "type": "object",
@@ -596,31 +603,35 @@
                           "format": "int64",
                           "example": 1
                         },
+                        "noKTP": {
+                          "type": "string",
+                          "example": 182745
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "Rei"
+                        },
                         "name": {
                           "type": "string",
-                          "example": "Adit"
+                          "example": "Rei"
+                        },
+                        "gender": {
+                          "type": "string",
+                          "example": "Pria"
                         },
                         "contact": {
                           "type": "string",
-                          "example": 801928346
+                          "example": 812472134
                         },
-                        "address": {
+                        "dateOfBirth": {
                           "type": "string",
-                          "example": "jl. anggrek no.00"
+                          "example": "04-04-2002"
                         },
-                        "photo": {
+                        "photoProfile": {
                           "type": "string",
                           "example": "https://res.cloudinary.com/dbuxups0z/image/upload/v1665242741/test/z45vzrf84pjditp6jh4a.jpg"
                         },
-                        "email": {
-                          "type": "string",
-                          "example": "Adit@mail.com"
-                        },
-                        "password": {
-                          "type": "string",
-                          "example": "$2b$10$bYPE07NwXnMGE8cqkunNKe/KBcme4HcEIRYoLDfd5wz2GkoX0RvcW"
-                        },
-                        "createdAt": {
+                        "updatedAt": {
                           "type": "string",
                           "example": "2022-10-22T08:36:55.584Z"
                         }
@@ -671,7 +682,7 @@
                       "example": "Success"
                     },
                     "massage": {
-                      "example": "user deleted successfully"
+                      "example": "user data deleted successfully"
                     }
                   }
                 }

@@ -55,9 +55,11 @@ function apply(app) {
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);
-  app.get("/api/auth/user:id", authenticationController.authorize(accessControl.CUSTOMER), authenticationController.handleGetUser);
-  app.get("/api/auth/user", authenticationController.handleListUser);
-  app.put("/api/auth/update/:id", uploader.single("photoProfile"), authenticationController.handleUpdateUser);
+  app.get("/api/auth/user", authenticationController.authorize(accessControl.CUSTOMER), authenticationController.handleGetUser);
+  
+  app.get("/api/v1/users", authenticationController.handleListUser);
+  app.put("/api/v1/user/update/:id", uploader.single("photoProfile"), authenticationController.handleUpdateUser);
+  
 
   app.use(applicationController.handleNotFound);
   app.use(applicationController.handleError);

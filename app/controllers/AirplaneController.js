@@ -82,9 +82,8 @@ class AirplaneController extends ApplicationController {
     await airplane.destroy();
 
     res.status(200).json({
-      status: "success",
-      message: "airplane deleted successfully",
-      data : ticket,
+      status: 'success',
+      message: 'airplanes data deleted successfully',
     });
   }
 
