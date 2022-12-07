@@ -198,6 +198,7 @@ describe("AuthenticationController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
         message: expect.any(String),
+        role: expect.any(String),
         status: expect.any(String),
         user: expect.any(String)
       });
@@ -320,7 +321,7 @@ describe("AuthenticationController", () => {
       const gender = "Pria";
       const dateOfBirth = "04-04-2002";
       const address = "Indonesia";
-      const photoProfile =  "https://www.google.com/url?sa=i&url=https%3A%2F%2Fid.wikipedia.org%2Fwiki%2FBajaj&psig=AOvVaw2YLBkKGo8Z-OCJze25x5hf&ust=1668538058650000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPiQoOOqrvsCFQAAAAAdAAAAABAD";
+      const photoProfile = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fid.wikipedia.org%2Fwiki%2FBajaj&psig=AOvVaw2YLBkKGo8Z-OCJze25x5hf&ust=1668538058650000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPiQoOOqrvsCFQAAAAAdAAAAABAD";
 
       const mockRequest = {
         params: {
@@ -377,19 +378,20 @@ describe("AuthenticationController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: "success",
         message: "user updated successfully",
-        data : {
+        data: {
           noKtp,
           username,
           name,
           contact,
-          gender : expect.any(String),
+          gender: expect.any(String),
           dateOfBirth,
           address,
-          photoProfile}
+          photoProfile
+        }
       });
     });
   });
-  
+
 
   describe("#handleRegister", () => {
     it("should return status 201  and token", async () => {
@@ -447,7 +449,7 @@ describe("AuthenticationController", () => {
         status: "OK",
         message: "Success Register New User",
         user: mockUser.email,
-        accessToken:expect.any(String) ,
+        accessToken: expect.any(String),
       });
     });
   });
@@ -502,7 +504,7 @@ describe("AuthenticationController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: "success",
         message: "get user data successful",
-        data : mockUser,
+        data: mockUser,
       });
     });
 
@@ -667,7 +669,7 @@ describe("AuthenticationController", () => {
       );
 
       expect(mockUser.encryptedPassword).toEqual(mockRequest.body.password);
-      });
     });
   });
+});
 
