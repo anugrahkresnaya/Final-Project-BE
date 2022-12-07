@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       createdBy: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       updatedBy: {
         type: Sequelize.INTEGER
