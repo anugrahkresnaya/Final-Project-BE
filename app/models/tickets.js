@@ -27,6 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     airplane_name: DataTypes.STRING,
     departure_time: DataTypes.DATE,
     arrival_time: DataTypes.DATE,
+    return_time: DataTypes.DATE,
+    arrival2_time: DataTypes.DATE,
     price: DataTypes.INTEGER,
     category: DataTypes.STRING,
     origin: DataTypes.STRING,
@@ -37,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Tickets',
-    paranoid: true
   });
   return Tickets;
 };

@@ -18,6 +18,12 @@ module.exports = {
       arrival_time: {
         type: Sequelize.DATE
       },
+      return_time: {
+        type: Sequelize.DATE
+      },
+      arrival2_time: {
+        type: Sequelize.DATE
+      },
       price: {
         type: Sequelize.INTEGER
       },
