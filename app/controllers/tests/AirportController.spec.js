@@ -35,12 +35,16 @@ describe("AirportController", () => {
       await airportController.handleGetAirport(mockRequest, mockResponse);
 
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(mockAirport);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "get airport data successfull",
+        data: mockAirport,
+      });
     });
   });
 
   describe("#handleCreateAirport", () => {
-    it("should call res.status(201) and res.json with airport data", async () => {
+    it("should call res.status(200) and res.json with airport data", async () => {
       const name = "Soekarno Hatta Airport";
       const city = "Jakarta";
       const country = "Indonesia";
@@ -74,8 +78,12 @@ describe("AirportController", () => {
       await airportController.handleCreateAirport(mockRequest, mockResponse);
 
       expect(mockAirportModel.create).toHaveBeenCalled();
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith(mockAirport);
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "airport added successfully",
+        data: mockAirport
+      });
     });
 
     it("should call res.status(422) and res.json with error instance", async () => {
@@ -123,7 +131,7 @@ describe("AirportController", () => {
   });
 
   describe("#handleUpdateAirport", () => {
-    it("should call res.status(201) and res.json with airport data", async () => {
+    it("should call res.status(200) and res.json with airport data", async () => {
       const name = "Soekarno Hatta Airport";
       const city = "Jakarta";
       const country = "Indonesia";
@@ -169,12 +177,16 @@ describe("AirportController", () => {
         country_code
       });
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(mockAirport);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "airport updated successfully",
+        data: mockAirport,
+      });
     });
   });
 
   describe("#handleDeleteAirport", () => {
-    it("should call res.status(204)", async () => {
+    it("should call res.status(200)", async () => {
       const name = "Soekarno Hatta Airport";
       const city = "Jakarta";
       const country = "Indonesia";
@@ -200,7 +212,7 @@ describe("AirportController", () => {
 
       const mockResponse = {
         status: jest.fn().mockReturnThis(),
-        end: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
       };
 
       const airportController = new AirportController({ airportModel: mockAirportModel });
@@ -208,8 +220,11 @@ describe("AirportController", () => {
 
       expect(mockAirportModel.findByPk).toHaveBeenCalledWith(1);
       expect(mockAirport.destroy).toHaveBeenCalledWith();
-      expect(mockResponse.status).toHaveBeenCalledWith(204);
-      expect(mockResponse.end).toHaveBeenCalled();
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "airport data deleted successfully",
+      });
     });
   });
 
@@ -252,7 +267,11 @@ describe("AirportController", () => {
 
       expect(mockAirplaneModel.findAll).toHaveBeenCalled();
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(mockAirportList);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "get airports list successfull",
+        data: mockAirportList,
+      });
     });
   });
 

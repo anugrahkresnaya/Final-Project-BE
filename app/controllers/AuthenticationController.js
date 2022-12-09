@@ -77,6 +77,7 @@ class AuthenticationController extends ApplicationController {
         status: "OK",
         message: "Success Login",
         user: user.email,
+        role: user.Role.name,
         accessToken,
       })
     }
@@ -137,18 +138,20 @@ class AuthenticationController extends ApplicationController {
       accessToken,
     })
   }
+  
   handleUpdateUser = async (req, res) => {
     try {
       const {
         noKtp,
         username,
         name,
+        contact,
         gender,
         dateOfBirth,
         address,
         photoProfile,
       } = req.body;
-      const id = req.params.id;
+      const user = await this.getUserFromRequest(req);
       if (req.file != null) {
         const imageName = req.file.originalname
         // upload file 
@@ -156,23 +159,24 @@ class AuthenticationController extends ApplicationController {
           file: req.file.buffer,
           fileName: imageName,
         })
-        await this.userModel.update({
+        await user.update({
           noKtp,
           username,
           name,
+          contact,
           gender,
           dateOfBirth,
           address,
           photoProfile: img.url,
-        }, {
-          where: { id }
         });
         res.status(200).json({
-          'status': 'success update',
-          'data': {
+          status: 'success',
+          message: 'user updated successfully',
+          data: {
             noKtp,
             username,
             name,
+            contact,
             gender,
             dateOfBirth,
             address,
@@ -180,24 +184,25 @@ class AuthenticationController extends ApplicationController {
           }
         })
       } else {
-        await this.userModel.update({
+        await user.update({
           noKtp,
           username,
           name,
+          contact,
           gender,
           dateOfBirth,
           address,
           photoProfile,
 
-        }, {
-          where: { id }
         });
         res.status(200).json({
-          'status': 'success update',
-          'data': {
+          status: 'success',
+          message: 'user updated successfully',
+          data: {
             noKtp,
             username,
             name,
+            contact,
             gender,
             dateOfBirth,
             address,
@@ -234,7 +239,20 @@ class AuthenticationController extends ApplicationController {
       return;
     }
 
-    res.status(200).json(user);
+    res.status(200).json({
+      status: "success",
+      message: "get user data successful",
+      data : user,
+      });
+  }
+  handleListUser = async (req, res) => {
+    const users = await this.userModel.findAll()
+
+    res.status(200).json({
+      status: "success",
+      message: "get users list successfull",
+      data : users,
+    });
   }
 
   createTokenFromUser = (user, role) => {
@@ -261,6 +279,10 @@ class AuthenticationController extends ApplicationController {
   verifyPassword = (password, encryptedPassword) => {
     return this.bcrypt.compareSync(password, encryptedPassword)
   }
+  getUserFromRequest(req) {
+    return this.userModel.findByPk(req.params.id);
+  }
 }
+
 
 module.exports = AuthenticationController;

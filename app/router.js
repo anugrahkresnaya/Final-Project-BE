@@ -5,7 +5,6 @@ const uploader = require('./middleware/uploader')
 const {
   ApplicationController,
   AuthenticationController,
-  UserController,
   AirportController,
   AirplaneController,
   TicketController
@@ -27,7 +26,6 @@ function apply(app) {
 
   const applicationController = new ApplicationController();
   const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel, });
-  const userController = new UserController({ userModel });
   const airportController = new AirportController({ airportModel });
   const airplaneController = new AirplaneController({ airplaneModel });
   const ticketController = new TicketController({ ticketsModel, airplaneModel, airportModel });
@@ -36,28 +34,29 @@ function apply(app) {
 
   app.get("/", applicationController.handleGetRoot);
 
-  app.post("/api/v1/airports", airportController.handleCreateAirport);
+  app.post("/api/v1/airports/add", airportController.handleCreateAirport);
   app.get("/api/v1/airports", airportController.handleListAirport);
   app.get("/api/v1/airports/:id", airportController.handleGetAirport);
-  app.put("/api/v1/airports/:id", airportController.handleUpdateAirport);
-  app.delete("/api/v1/airports/:id", airportController.handleDeleteAirport);
+  app.put("/api/v1/airports/update/:id", airportController.handleUpdateAirport);
+  app.delete("/api/v1/airports/delete/:id", airportController.handleDeleteAirport);
 
-  app.post("/api/v1/airplanes", airplaneController.handleCreateAirplane);
+  app.post("/api/v1/airplanes/add", airplaneController.handleCreateAirplane);
   app.get("/api/v1/airplanes/:id", airplaneController.handleGetAirplane);
-  app.put("/api/v1/airplanes/:id", airplaneController.handleUpdateAirplane);
-  app.delete("/api/v1/airplanes/:id", airplaneController.handleDeleteAirplane);
+  app.put("/api/v1/airplanes/update/:id", airplaneController.handleUpdateAirplane);
+  app.delete("/api/v1/airplanes/delete/:id", airplaneController.handleDeleteAirplane);
   app.get("/api/v1/airplanes", airplaneController.handleListAirplane);
 
-  app.post("/v1/tickets", authenticationController.authorize(accessControl.ADMIN), ticketController.handleCreateTicket);
-  app.get("/v1/tickets/:id", ticketController.handleGetTicket);
-  app.put("/v1/tickets/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleUpdateTicket);
-  app.delete("/v1/tickets/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleDeleteTicket);
+  app.post("/api/v1/tickets/add", authenticationController.authorize(accessControl.ADMIN), ticketController.handleCreateTicket);
+  app.get("/api/v1/tickets/:id", ticketController.handleGetTicket);
+  app.put("/api/v1/tickets/update/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleUpdateTicket);
+  app.delete("/api/v1/tickets/delete/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleDeleteTicket);
   app.get("/v1/tickets", ticketController.handleListTickets);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);
   app.get("/api/auth/user", authenticationController.authorize(accessControl.CUSTOMER && accessControl.ADMIN), authenticationController.handleGetUser);
-  app.put("/api/auth/update_user/:id", uploader.single("photoProfile"), authenticationController.handleUpdateUser);
+  app.get("/api/v1/users", authenticationController.handleListUser);
+  app.put("/api/v1/user/update/:id", uploader.single("photoProfile"), authenticationController.handleUpdateUser);
 
   app.use(applicationController.handleNotFound);
   app.use(applicationController.handleError);

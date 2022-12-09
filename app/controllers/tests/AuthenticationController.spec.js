@@ -198,6 +198,7 @@ describe("AuthenticationController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
         message: expect.any(String),
+        role: expect.any(String),
         status: expect.any(String),
         user: expect.any(String)
       });
@@ -311,6 +312,86 @@ describe("AuthenticationController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith(error);
     });
   });
+  describe("#handleUpdateUser", () => {
+    it("should call res.status(200) and res.json with user data", async () => {
+      const noKtp = "1289047";
+      const username = "KAka";
+      const name = "kakaka";
+      const contact = "1028497";
+      const gender = "Pria";
+      const dateOfBirth = "04-04-2002";
+      const address = "Indonesia";
+      const photoProfile = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fid.wikipedia.org%2Fwiki%2FBajaj&psig=AOvVaw2YLBkKGo8Z-OCJze25x5hf&ust=1668538058650000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPiQoOOqrvsCFQAAAAAdAAAAABAD";
+
+      const mockRequest = {
+        params: {
+          id: 1,
+        },
+        body: {
+          noKtp,
+          username,
+          name,
+          contact,
+          gender,
+          dateOfBirth,
+          address,
+          photoProfile
+        },
+      };
+
+      const mockUser = new User({
+        noKtp,
+        username,
+        name,
+        contact,
+        gender,
+        dateOfBirth,
+        address,
+        photoProfile
+      });
+      mockUser.update = jest.fn().mockReturnThis();
+
+      const mockUserModel = {
+        findByPk: jest.fn().mockReturnValue(mockUser),
+      };
+
+      const mockResponse = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+      };
+
+      const authentication = new AuthenticationController({ userModel: mockUserModel });
+      await authentication.handleUpdateUser(mockRequest, mockResponse);
+
+      expect(mockUserModel.findByPk).toHaveBeenCalledWith(1);
+      expect(mockUser.update).toHaveBeenCalledWith({
+        noKtp,
+        username,
+        name,
+        contact,
+        gender,
+        dateOfBirth,
+        address,
+        photoProfile
+      });
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "user updated successfully",
+        data: {
+          noKtp,
+          username,
+          name,
+          contact,
+          gender: expect.any(String),
+          dateOfBirth,
+          address,
+          photoProfile
+        }
+      });
+    });
+  });
+
 
   describe("#handleRegister", () => {
     it("should return status 201  and token", async () => {
@@ -365,10 +446,10 @@ describe("AuthenticationController", () => {
       expect(mockUserModel.create).toHaveBeenCalled();
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "OK",
+        message: "Success Register New User",
+        user: mockUser.email,
         accessToken: expect.any(String),
-        message: expect.any(String),
-        status: expect.any(String),
-        user: expect.any(String)
       });
     });
   });
@@ -420,7 +501,11 @@ describe("AuthenticationController", () => {
       expect(mockUserModel.findByPk).toHaveBeenCalledWith(mockRequest.user.id);
       expect(mockRoleModel.findByPk).toHaveBeenCalledWith(mockUserModel.roleId);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(mockUser);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "get user data successful",
+        data: mockUser,
+      });
     });
 
     it(
@@ -587,3 +672,4 @@ describe("AuthenticationController", () => {
     });
   });
 });
+

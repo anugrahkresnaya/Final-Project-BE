@@ -30,8 +30,12 @@ describe("AirplaneController", () => {
       await airplaneController.handleCreateAirplane(mockRequest, mockResponse);
 
       expect(mockAirplaneModel.create).toHaveBeenCalled();
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith(mockAirplane);
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "airplane added successfully",
+        data: mockAirplane,
+      });
     });
 
     it("should call res.status(422) and res.json with error instance", async () => {
@@ -97,7 +101,11 @@ describe("AirplaneController", () => {
       await airplaneController.handleGetAirplane(mockRequest, mockResponse);
 
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(mockAirplane);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "get airplane data successfully",
+        data: mockAirplane
+      });
     });
   });
 
@@ -136,11 +144,16 @@ describe("AirplaneController", () => {
       expect(mockAirplaneModel.findByPk).toHaveBeenCalledWith(1);
       expect(mockAirplane.update).toHaveBeenCalledWith({ name, code, country });
       expect(mockResponse.status).toHaveBeenCalledWith(200)
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "airplane updated successfully",
+        data: mockAirplane
+      });
     });
   });
 
   describe("#handleDeleteAirplane", () => {
-    it("should call res.status(204)", async () => {
+    it("should call res.status(200)", async () => {
       const name = "Garuda Indonesia";
       const code = "GIA";
       const country = "Indonesia";
@@ -160,7 +173,7 @@ describe("AirplaneController", () => {
 
       const mockResponse = {
         status: jest.fn().mockReturnThis(),
-        end: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
       };
 
       const airplaneController = new AirplaneController({ airplaneModel: mockAirplaneModel });
@@ -168,8 +181,11 @@ describe("AirplaneController", () => {
 
       expect(mockAirplaneModel.findByPk).toHaveBeenCalledWith(1);
       expect(mockAirplane.destroy).toHaveBeenCalledWith();
-      expect(mockResponse.status).toHaveBeenCalledWith(204);
-      expect(mockResponse.end).toHaveBeenCalled();
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "airplanes data deleted successfully",
+      });
     });
   });
 
@@ -211,7 +227,11 @@ describe("AirplaneController", () => {
 
       expect(mockAirplaneModel.findAll).toHaveBeenCalled();
       expect(mockResponse.status).toHaveBeenCalledWith(200);
-      expect(mockResponse.json).toHaveBeenCalledWith(mockAirplaneList);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "get list airplanes successful",
+        data: mockAirplaneList
+      });
     });
   });
 
