@@ -9,11 +9,12 @@ const generateRandomInt = (min = 1, max = 5) => {
 }
 
 class TicketController extends ApplicationController {
-  constructor({ ticketsModel, airplaneModel, airportModel }) {
+  constructor({ ticketsModel, airplaneModel, airportModel, ordersModel }) {
     super();
     this.ticketsModel = ticketsModel;
     this.airportModel = airportModel;
     this.airplaneModel = airplaneModel;
+    this.ordersModel = ordersModel;
   }
 
   handleCreateTicket = async (req, res) => {
@@ -60,8 +61,8 @@ class TicketController extends ApplicationController {
     res.status(200).json({
       status: "success",
       message: "get ticket successful",
-      data : ticket,
-      });
+      data: ticket,
+    });
   }
 
   handleUpdateTicket = async (req, res) => {
@@ -118,8 +119,24 @@ class TicketController extends ApplicationController {
     res.status(200).json({
       status: "success",
       message: "get ticket list successful",
-      data : tickets,
-      });
+      data: tickets,
+    });
+  }
+
+  handleOrderTicket = async (req, res, next) => {
+    try {
+      const ticket = await this.getTicketFromRequest(req);
+
+      const order = await this.ordersModel.create({
+        userId: req.user.id,
+        ticketId: ticket.id,
+        order_date: new Date(),
+      })
+
+      res.status(201).json(order)
+    } catch (error) {
+      next(error);
+    }
   }
 
   getTicketFromRequest(req) {

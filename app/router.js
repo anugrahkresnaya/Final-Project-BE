@@ -15,6 +15,7 @@ const {
   Airport,
   Airplane,
   Tickets,
+  Orders,
 } = require("./models");
 
 function apply(app) {
@@ -23,12 +24,13 @@ function apply(app) {
   const airportModel = Airport;
   const airplaneModel = Airplane;
   const ticketsModel = Tickets;
+  const ordersModel = Orders;
 
   const applicationController = new ApplicationController();
   const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel, });
   const airportController = new AirportController({ airportModel });
   const airplaneController = new AirplaneController({ airplaneModel });
-  const ticketController = new TicketController({ ticketsModel, airplaneModel, airportModel });
+  const ticketController = new TicketController({ ticketsModel, airplaneModel, airportModel, ordersModel });
 
   const accessControl = authenticationController.accessControl;
 
@@ -50,7 +52,8 @@ function apply(app) {
   app.get("/api/v1/tickets/:id", ticketController.handleGetTicket);
   app.put("/api/v1/tickets/update/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleUpdateTicket);
   app.delete("/api/v1/tickets/delete/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleDeleteTicket);
-  app.get("/v1/tickets", ticketController.handleListTickets);
+  app.get("/api/v1/tickets", ticketController.handleListTickets);
+  app.post("/api/v1/tickets/:id/order", authenticationController.authorize(accessControl.CUSTOMER), ticketController.handleOrderTicket);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);
