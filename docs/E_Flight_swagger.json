@@ -38,6 +38,38 @@
           "auth"
         ],
         "description": "To register new user to the user table",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "description": "this is user's name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Reina"
+            }
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "description": "this is user's email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "reina@mail.com"
+            }
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "description": "this is user's password",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "reina123"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if user successfully registered",
@@ -53,31 +85,13 @@
                     "massage": {
                       "example": "Success Register New User"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "format": "int64",
-                          "example": 1
-                        },
-                        "name": {
-                          "type": "string",
-                          "example": "Rei"
-                        },
-                        "email": {
-                          "type": "string",
-                          "example": "rei@mail.com"
-                        },
-                        "password": {
-                          "type": "string",
-                          "example": "$2b$10$bYPE07NwXnMGE8cqkunNKe/KBcme4HcEIRYoLDfd5wz2GkoX0RvcW"
-                        },
-                        "createdAt": {
-                          "type": "string",
-                          "example": "2022-10-22T08:36:55.584Z"
-                        }
-                      }
+                    "user": {
+                      "type": "string",
+                      "example": "rei@mail.com"
+                    },
+                    "access token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6Ik1pZGhhdCIsImVtYWlsIjoibWlkaGF0QGJpbmFyLmNvLmlkIiwicm9sZSI6eyJpZCI6MSwibmFtZSI6IkNVU1RPTUVSIn0sImlhdCI6MTY3MDU5NTgwOH0.9QaMJm74p_g8s0w3CFRXeH3TechS6-l1ROXDDwtL7Ys"
                     }
                   }
                 }
@@ -113,7 +127,7 @@
                       "example": "FAIL"
                     },
                     "message": {
-                      "example": "minimum password length must be 8 charater or more"
+                      "example": "minimum password length must be 6 charater or more"
                     }
                   }
                 }
@@ -129,6 +143,28 @@
           "auth"
         ],
         "description": "To Login with exist user",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "description": "this is user's email",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "reina@mail.com"
+            }
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "description": "this is user's password",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "reina123"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if user successfully Login",
@@ -144,36 +180,17 @@
                     "massage": {
                       "example": "Success Login"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "integer",
-                          "format": "int64",
-                          "example": 1
-                        },
-                        "name": {
-                          "type": "string",
-                          "example": "Rei"
-                        },
-                        "email": {
-                          "type": "string",
-                          "example": "rei@mail.com"
-                        },
-                        "roleId": {
-                          "type": "integer",
-                          "format": "int64",
-                          "example": 3
-                        },
-                        "role": {
-                          "type": "string",
-                          "example": "member"
-                        },
-                        "token": {
-                          "type": "string",
-                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InJlaSIsImVtYWlsIjoicmVpQG1haWwuY29tIiwicm9sZUlkIjozLCJpYXQiOjE2NjY0NTA4MDd9.Fn_Q3So3y0NadOzOG4YcUsu4CY37PPyt8weLnS9x7_Y"
-                        }
-                      }
+                    "user": {
+                      "type": "string",
+                      "example": "rei@mail.com"
+                    },
+                    "role": {
+                      "type": "string",
+                      "example": "CUSTOMER"
+                    },
+                    "access token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6Ik1pZGhhdCIsImVtYWlsIjoibWlkaGF0QGJpbmFyLmNvLmlkIiwicm9sZSI6eyJpZCI6MSwibmFtZSI6IkNVU1RPTUVSIn0sImlhdCI6MTY3MDU5NTgwOH0.9QaMJm74p_g8s0w3CFRXeH3TechS6-l1ROXDDwtL7Ys"
                     }
                   }
                 }
@@ -219,95 +236,34 @@
         }
       }
     },
-    "/api/auth/register-admin": {
-      "post": {
-        "tags": [
-          "auth"
-        ],
-        "description": "To promote member user to become admin",
-        "responses": {
-          "200": {
-            "description": "if super admin successfully promote an admin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "massage": {
-                      "example": "Successful, promote to admin"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "if member is already is an admin",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "example": "FAIL"
-                    },
-                    "message": {
-                      "example": "user with email : rei@mail.com already admin"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "if email is doesnt exist",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "example": "FAIL"
-                    },
-                    "message": {
-                      "example": "user with email : ri@mail.com is not found"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "402": {
-            "description": "if user doesnt have an authority",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "example": "Unauthorized Access"
-                    },
-                    "message": {
-                      "example": "only super admin can access this page"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/auth/user": {
+    "/api/auth/user/{id}": {
       "get": {
         "tags": [
           "auth"
         ],
         "description": "To check current user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is user id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "token",
+            "description": "this is user token for authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwibmFtZSI6InJlaSIsImVtYWlsIjoicmVpQG1haWwuY29tIiwicm9sZUlkIjozLCJpYXQiOjE2NjY0NTA4MDd9.Fn_Q3So3y0NadOzOG4YcUsu4CY37PPyt8weLnS9x7_Y"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if user successfully found",
@@ -323,19 +279,62 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "userId": {
+                        "id": {
                           "type": "integer",
                           "format": "int64",
                           "example": 1
                         },
+                        "noKTP": {
+                          "type": "string",
+                          "example": 182745
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "Rei"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Rei"
+                        },
+                        "contact": {
+                          "type": "string",
+                          "example": 812472134
+                        },
+                        "gender": {
+                          "type": "string",
+                          "example": "Pria"
+                        },
+                        "dateOfBirth": {
+                          "type": "string",
+                          "example": "04-04-2002"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "gotham"
+                        },
+                        "photoProfile": {
+                          "type": "string",
+                          "example": "https://res.cloudinary.com/dbuxups0z/image/upload/v1665242741/test/z45vzrf84pjditp6jh4a.jpg"
+                        },
                         "email": {
                           "type": "string",
-                          "example": "rei@mail.com"
+                          "example": "jl. anggrek no.00"
+                        },
+                        "encryptedPassword": {
+                          "type": "string",
+                          "example": "$2b$10$bYPE07NwXnMGE8cqkunNKe/KBcme4HcEIRYoLDfd5wz2GkoX0RvcW"
                         },
                         "roleId": {
                           "type": "integer",
-                          "format": "int64",
-                          "example": 3
+                          "example": 1
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
                         }
                       }
                     }
@@ -467,12 +466,24 @@
         }
       }
     },
-    "/api/users/:id": {
+    "/api/users/{id}": {
       "get": {
         "tags": [
           "users"
         ],
         "description": "To retrieve the user data of existing users",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is user's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully retrieve",
@@ -569,12 +580,104 @@
         }
       }
     },
-    "/api/users/update/:id": {
+    "/api/users/update/{id}": {
       "put": {
         "tags": [
           "users"
         ],
         "description": "To update the user on the users table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is user id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "noKtp",
+            "description": "this is user no KTP",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 321194786128
+            }
+          },
+          {
+            "in": "query",
+            "name": "username",
+            "description": "this is user's username",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "GreenHat"
+            }
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "this is user's name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Reina"
+            }
+          },
+          {
+            "in": "query",
+            "name": "contact",
+            "description": "this is user contact number",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 8018294123
+            }
+          },
+          {
+            "in": "query",
+            "name": "gender",
+            "description": "this is user's gender",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "pria"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dateOfBirth",
+            "description": "this is user date of birth",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "July 20, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "address,",
+            "description": "this is user's address",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Gotham"
+            }
+          },
+          {
+            "in": "query",
+            "name": "photoProfile",
+            "description": "this is user's photo profile",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "https://res.cloudinary.com/dbuxups0z/image/upload/v1665242741/test/z45vzrf84pjditp6jh4a.jpg"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully updated",
@@ -593,16 +696,6 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "roleId": {
-                          "type": "integer",
-                          "format": "int64",
-                          "example": 3
-                        },
-                        "id": {
-                          "type": "integer",
-                          "format": "int64",
-                          "example": 1
-                        },
                         "noKTP": {
                           "type": "string",
                           "example": 182745
@@ -615,13 +708,13 @@
                           "type": "string",
                           "example": "Rei"
                         },
-                        "gender": {
-                          "type": "string",
-                          "example": "Pria"
-                        },
                         "contact": {
                           "type": "string",
                           "example": 812472134
+                        },
+                        "gender": {
+                          "type": "string",
+                          "example": "Pria"
                         },
                         "dateOfBirth": {
                           "type": "string",
@@ -663,12 +756,24 @@
         }
       }
     },
-    "/api/users/delete/:id": {
+    "/api/users/delete/{id}": {
       "delete": {
         "tags": [
           "users"
         ],
         "description": "To delete the user on the users table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is user id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully deleted",
@@ -794,12 +899,24 @@
         }
       }
     },
-    "/api/airplanes/:id": {
+    "/api/airplanes/{id}": {
       "get": {
         "tags": [
           "airplanes"
         ],
         "description": "To retrieve the list of existing airplanes",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is airplane's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully retrieve",
@@ -818,37 +935,30 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "cars": {
-                          "type": "array",
-                          "items": {
-                            "properties": {
-                              "id": {
-                                "type": "integer",
-                                "format": "int64",
-                                "example": 1
-                              },
-                              "name": {
-                                "type": "string",
-                                "example": "Garuda Indonesia"
-                              },
-                              "code": {
-                                "type": "string",
-                                "example": "GIA"
-                              },
-                              "country": {
-                                "type": "string",
-                                "example": "Indonesia"
-                              },
-                              "createdAt": {
-                                "type": "string",
-                                "example": "2022-10-22T08:36:55.584Z"
-                              },
-                              "updatedAt": {
-                                "type": "string",
-                                "example": "2022-10-22T08:36:55.584Z"
-                              }
-                            }
-                          }
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Garuda Indonesia"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "GIA"
+                        },
+                        "country": {
+                          "type": "string",
+                          "example": "Indonesia"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
                         }
                       }
                     }
@@ -884,6 +994,38 @@
           "airplanes"
         ],
         "description": "To add new airplanes to the airplanes table",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "description": "this is airplanes name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Garuda Indonesia"
+            }
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "description": "this is airplane's code",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "GIA"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "description": "this is airplane's country",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Indonesia"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully added",
@@ -955,12 +1097,54 @@
         }
       }
     },
-    "/api/airplanes/update/:id": {
+    "/api/airplanes/update/{id}": {
       "put": {
         "tags": [
           "airplanes"
         ],
         "description": "To update the airplanes on the airplanes table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is airplane's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "this is airplanes name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Garuda Indonesia"
+            }
+          },
+          {
+            "in": "query",
+            "name": "code",
+            "description": "this is airplane's code",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "GIA"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "description": "this is airplane's country",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Indonesia"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully updated",
@@ -1032,12 +1216,24 @@
         }
       }
     },
-    "/api/airplanes/delete/:id": {
+    "/api/airplanes/delete/{id}": {
       "delete": {
         "tags": [
           "airplanes"
         ],
         "description": "To delete the airplanes on the airplanes table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is airplane's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully deleted",
@@ -1156,12 +1352,24 @@
         }
       }
     },
-    "/api/v1/airport/:id": {
+    "/api/v1/airport/{id}": {
       "get": {
         "tags": [
           "airports"
         ],
         "description": "To retrieve the list of existing airports",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is airport's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully retrieve",
@@ -1239,6 +1447,48 @@
           "airports"
         ],
         "description": "To add new airport to the airports table",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "name",
+            "description": "this is airport's name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "seokarno hatta airport"
+            }
+          },
+          {
+            "in": "query",
+            "name": "city",
+            "description": "this is airport's city",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "jakarta"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "description": "this is airport's country",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "indonesia"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country_code",
+            "description": "this is airport's country code",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "idn"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully added",
@@ -1310,12 +1560,64 @@
         }
       }
     },
-    "/api/v1/airport/update/:id": {
+    "/api/v1/airport/update/{id}": {
       "put": {
         "tags": [
           "airports"
         ],
         "description": "To update the airport on the airports table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is airport's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "this is airport's name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "seokarno hatta airport"
+            }
+          },
+          {
+            "in": "query",
+            "name": "city",
+            "description": "this is airport's city",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "jakarta"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "description": "this is airport's country",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "indonesia"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country_code",
+            "description": "this is airport's country code",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "idn"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully updated",
@@ -1387,12 +1689,24 @@
         }
       }
     },
-    "/api/v1/airport/delete/:id": {
+    "/api/v1/airport/delete/{id}": {
       "delete": {
         "tags": [
           "airports"
         ],
         "description": "To delete the airport on the airports table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is airport's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully deleted",
@@ -1540,12 +1854,24 @@
         }
       }
     },
-    "/api/v1/tickets/:id": {
+    "/api/v1/tickets/{id}": {
       "get": {
         "tags": [
           "tickets"
         ],
         "description": "To retrieve the list of tickets by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is ticket's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully retrieve",
@@ -1652,6 +1978,98 @@
           "tickets"
         ],
         "description": "To add new ticket list to the tickets table",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "departure_time",
+            "description": "this is ticket's departure time",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "July 20, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "arrival_time",
+            "description": "this is ticket's arrival time",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "July 21, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "return_time",
+            "description": "this is ticket's return time",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "August 4, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "arrival2_time",
+            "description": "this is ticket's 2nd arrival time",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "August 5, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "price",
+            "description": "this is ticket's price",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 860000
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "description": "this is ticket's category",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "one way"
+            }
+          },
+          {
+            "in": "query",
+            "name": "origin,",
+            "description": "this is ticket's departure city",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Gotham"
+            }
+          },
+          {
+            "in": "query",
+            "name": "destination",
+            "description": "this is ticket's desitnation city",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "star city"
+            }
+          },
+          {
+            "in": "query",
+            "name": "createdBy",
+            "description": "this is who create the ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": "req.user.id"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully added",
@@ -1752,12 +2170,114 @@
         }
       }
     },
-    "/api/v1/tickets/update/:id": {
+    "/api/v1/tickets/update/{id}": {
       "put": {
         "tags": [
           "tickets"
         ],
         "description": "To update the ticket on the tickets table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is ticket's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "departure_time",
+            "description": "this is ticket's departure time",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "July 20, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "arrival_time",
+            "description": "this is ticket's arrival time",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "July 21, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "return_time",
+            "description": "this is ticket's return time",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "August 4, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "arrival2_time",
+            "description": "this is ticket's 2nd arrival time",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "August 5, 23 10:20:18 GMT"
+            }
+          },
+          {
+            "in": "query",
+            "name": "price",
+            "description": "this is ticket's price",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 860000
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "description": "this is ticket's category",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "one way"
+            }
+          },
+          {
+            "in": "query",
+            "name": "origin,",
+            "description": "this is ticket's departure city",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Gotham"
+            }
+          },
+          {
+            "in": "query",
+            "name": "destination",
+            "description": "this is ticket's desitnation city",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "star city"
+            }
+          },
+          {
+            "in": "query",
+            "name": "updatedBy",
+            "description": "this is who edited the ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": "req.user.id"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully updated",
@@ -1858,12 +2378,24 @@
         }
       }
     },
-    "/api/v1/tickets/delete/:id": {
+    "/api/v1/tickets/delete/{id}": {
       "delete": {
         "tags": [
           "tickets"
         ],
         "description": "To delete the flight list on the flightList table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is ticket's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "if data successfully deleted",

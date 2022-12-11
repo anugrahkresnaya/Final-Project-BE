@@ -118,6 +118,11 @@ class AuthenticationController extends ApplicationController {
       return;
     }
 
+    const passswordLength = password.length >= 6
+    if (!passswordLength) {
+        const err = new ApiError(httpStatus.BAD_REQUEST, "password at least have 6 character or more");
+      res.status(422).json(err);
+    }
     const role = await this.roleModel.findOne({
       where: { name: this.accessControl.CUSTOMER }
     });
