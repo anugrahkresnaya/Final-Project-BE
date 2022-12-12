@@ -20,6 +20,10 @@ class TicketController extends ApplicationController {
   handleCreateTicket = async (req, res) => {
     try {
       const {
+        departure_time,
+        arrival_time,
+        return_time,
+        arrival2_time,
         price,
         category,
         origin,
@@ -30,8 +34,10 @@ class TicketController extends ApplicationController {
       const airplaneName = airplane.dataValues.name;
 
       const ticket = await this.ticketsModel.create({
-        departure_time: new Date(),
-        arrival_time: new Date(),
+        departure_time: new Date(departure_time),
+        arrival_time: new Date(arrival_time),
+        return_time: new Date(return_time),
+        arrival2_time: new Date(arrival2_time),
         price,
         category,
         airplane_name: airplaneName,
