@@ -7,7 +7,7 @@ const { Role } = require("../../app/models");
 const names = [
   "Fendy",
   "Aisya",
-  "Anugerah",
+  "Anugrah",
   "Midhat",
   "Jinan",
   "Ridho"
