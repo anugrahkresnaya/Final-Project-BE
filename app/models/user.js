@@ -14,17 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'roleId',
       });
     }
-
-    toJSON() {
-      return {
-        id: this.id,
-        name: this.name,
-        email: this.email,
-        image: this.image,
-        createdAt: this.createdAt,
-        updatedAt: this.updatedAt,
-      };
-    }
   }
   User.init({
     noKtp: DataTypes.STRING,
