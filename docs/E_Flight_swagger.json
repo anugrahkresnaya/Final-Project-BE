@@ -2170,6 +2170,122 @@
         }
       }
     },
+    "/api/v1/tickets/{id}/order": {
+      "post": {
+        "tags": [
+          "tickets"
+        ],
+        "description": "To add the ordered ticket on the order table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is order's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "userId",
+            "description": "this is user's id that make an order",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 13
+            }
+          },
+          {
+            "in": "query",
+            "name": "ticketId",
+            "description": "this is ordered ticket's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 4
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_date",
+            "description": "this is ticket's ordered time/date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "August 4, 23 10:20:18 GMT"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "if data successfully added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "massage": {
+                      "example": "Ticket data added successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "userId": {
+                          "type": "integer",
+                          "example": 13
+                        },
+                        "ticketId": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "order_date": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "if doesnt have authority to update  data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "example": "Unauthorized Access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/tickets/update/{id}": {
       "put": {
         "tags": [
@@ -2409,7 +2525,7 @@
                       "example": "Success"
                     },
                     "massage": {
-                      "example": "Success Delete flightList with id: 13, deleted by suAdmin"
+                      "example": "ticket deleted successfully"
                     }
                   }
                 }
