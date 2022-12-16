@@ -36,19 +36,20 @@ function apply(app) {
 
   app.get("/", applicationController.handleGetRoot);
 
-  app.post("/api/v1/airports/add", airportController.handleCreateAirport);
+  app.post("/api/v1/airports/add", authenticationController.authorize(accessControl.ADMIN), airportController.handleCreateAirport);
   app.get("/api/v1/airports", airportController.handleListAirport);
   app.get("/api/v1/airports/:id", airportController.handleGetAirport);
-  app.put("/api/v1/airports/update/:id", airportController.handleUpdateAirport);
-  app.delete("/api/v1/airports/delete/:id", airportController.handleDeleteAirport);
+  app.put("/api/v1/airports/update/:id", authenticationController.authorize(accessControl.ADMIN), airportController.handleUpdateAirport);
+  app.delete("/api/v1/airports/delete/:id", authenticationController.authorize(accessControl.ADMIN), airportController.handleDeleteAirport);
 
-  app.post("/api/v1/airplanes/add", airplaneController.handleCreateAirplane);
-  app.get("/api/v1/airplanes/:id", airplaneController.handleGetAirplane);
-  app.put("/api/v1/airplanes/update/:id", airplaneController.handleUpdateAirplane);
-  app.delete("/api/v1/airplanes/delete/:id", airplaneController.handleDeleteAirplane);
+  app.post("/api/v1/airplanes/add", authenticationController.authorize(accessControl.ADMIN), airplaneController.handleCreateAirplane);
   app.get("/api/v1/airplanes", airplaneController.handleListAirplane);
+  app.get("/api/v1/airplanes/:id", airplaneController.handleGetAirplane);
+  app.put("/api/v1/airplanes/update/:id", authenticationController.authorize(accessControl.ADMIN), airplaneController.handleUpdateAirplane);
+  app.delete("/api/v1/airplanes/delete/:id", authenticationController.authorize(accessControl.ADMIN), airplaneController.handleDeleteAirplane);
 
   app.post("/api/v1/tickets/add", authenticationController.authorize(accessControl.ADMIN), ticketController.handleCreateTicket);
+  app.get("/api/v1/tickets", ticketController.handleListTickets);
   app.get("/api/v1/tickets/:id", ticketController.handleGetTicket);
   app.put("/api/v1/tickets/update/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleUpdateTicket);
   app.delete("/api/v1/tickets/delete/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleDeleteTicket);

@@ -247,9 +247,10 @@ class AuthenticationController extends ApplicationController {
     res.status(200).json({
       status: "success",
       message: "get user data successful",
-      data : user,
+      data : user
       });
   }
+
   handleListUser = async (req, res) => {
     const users = await this.userModel.findAll()
 
