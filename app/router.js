@@ -7,7 +7,8 @@ const {
   AuthenticationController,
   AirportController,
   AirplaneController,
-  TicketController
+  TicketController,
+  OrderController,
 } = require("./controllers");
 const {
   User,
@@ -16,6 +17,7 @@ const {
   Airplane,
   Tickets,
   Orders,
+  Notifications
 } = require("./models");
 
 function apply(app) {
@@ -25,12 +27,14 @@ function apply(app) {
   const airplaneModel = Airplane;
   const ticketsModel = Tickets;
   const ordersModel = Orders;
+  const notificationsModel = Notifications;
 
   const applicationController = new ApplicationController();
   const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel, });
   const airportController = new AirportController({ airportModel });
   const airplaneController = new AirplaneController({ airplaneModel });
-  const ticketController = new TicketController({ ticketsModel, airplaneModel, airportModel, ordersModel });
+  const ticketController = new TicketController({ ticketsModel, airplaneModel, airportModel, ordersModel, notificationsModel });
+  const orderController = new OrderController({ ordersModel });
 
   const accessControl = authenticationController.accessControl;
 
@@ -54,6 +58,8 @@ function apply(app) {
   app.delete("/api/v1/tickets/delete/:id", authenticationController.authorize(accessControl.ADMIN), ticketController.handleDeleteTicket);
   app.get("/api/v1/tickets", ticketController.handleListTickets);
   app.post("/api/v1/tickets/:id/order", authenticationController.authorize(accessControl.CUSTOMER), ticketController.handleOrderTicket);
+
+  app.get("/api/v1/orders", orderController.handleGetListOrder);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);

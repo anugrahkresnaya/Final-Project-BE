@@ -9,12 +9,19 @@ const generateRandomInt = (min = 1, max = 5) => {
 }
 
 class TicketController extends ApplicationController {
-  constructor({ ticketsModel, airplaneModel, airportModel, ordersModel }) {
+  constructor({
+    ticketsModel,
+    airplaneModel,
+    airportModel,
+    ordersModel,
+    notificationsModel
+  }) {
     super();
     this.ticketsModel = ticketsModel;
     this.airportModel = airportModel;
     this.airplaneModel = airplaneModel;
     this.ordersModel = ordersModel;
+    this.notificationsModel = notificationsModel;
   }
 
   handleCreateTicket = async (req, res) => {
@@ -137,6 +144,11 @@ class TicketController extends ApplicationController {
         userId: req.user.id,
         ticketId: ticket.id,
         order_date: new Date(),
+      });
+
+      await this.notificationsModel.create({
+        userId: req.user.id,
+        orderId: order.id,
       })
 
       res.status(201).json(order)
