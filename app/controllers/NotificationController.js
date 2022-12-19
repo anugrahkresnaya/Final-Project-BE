@@ -7,28 +7,15 @@ class NotificationController extends ApplicationController {
     this.ordersModel = ordersModel;
   }
 
-  handleCreateNotification = async (req, res) => {
-    try {
-      const {
-        orderId,
-      } = req.body
-      const notification = await this.notificationsModel.create({
-        orderId,
-        userId: req.user.id
-      });
+  handleGetNotificationList = async (req, res) => {
+    const notifications = await this.notificationsModel.findAll();
 
-      res.status(201).json({
-        status: 'success',
-        message: 'Notification added successfully',
-        data: notification,
-      })
-    } catch (error) {
-      res.status(422).json({
-        error: {
-          name: error.name,
-          message: error.message,
-        }
-      })
-    }
+    res.status(200).json({
+      status: 'success',
+      message: 'Successfully get order list',
+      data: notifications,
+    });
   }
 }
+
+module.exports = NotificationController;
