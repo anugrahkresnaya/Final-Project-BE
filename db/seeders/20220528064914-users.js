@@ -41,10 +41,10 @@ const contact = [
 ]
 
 const dateOfBirth = [
-  "23-02-2002",
-  "14-09-2002",
-  "29-01-2002",
-  "31-12-2002",
+  "02-23-2002",
+  "09-14-2002",
+  "01-29-2002",
+  "12-31-2002",
   "01-01-2002",
   "04-04-2002"
 ]
@@ -70,7 +70,7 @@ const address = [
 const photoProfile = "https://res.cloudinary.com/dd93u8fa5/image/upload/v1671182747/Binar%20Academy/monyet_esp40t.jpg"
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const password = "123456";
     const encryptedPassword = bcrypt.hashSync(password, 10);
     const timestamp = new Date();
@@ -171,10 +171,10 @@ module.exports = {
       createdAt: timestamp,
       updatedAt: timestamp
     },
-  ]);
+    ]);
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {});
   }
 };
