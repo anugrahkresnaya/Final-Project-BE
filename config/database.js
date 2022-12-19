@@ -1,6 +1,6 @@
 const {
   DB_USER = "postgres",
-  DB_PASSWORD = "123",
+  DB_PASSWORD = "fendys",
   DB_NAME = "db_finalproject",
   DB_HOST = "localhost",
   DB_PORT = "5432",
