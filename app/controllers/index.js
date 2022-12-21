@@ -5,6 +5,7 @@ const AirplaneController = require('./AirplaneController');
 const TicketController = require('./TicketController');
 const OrderController = require('./OrderController');
 const NotificationController = require('./NotificationController');
+const WishlistController = require('./WishlistController');
 
 module.exports = {
   ApplicationController,
@@ -14,4 +15,5 @@ module.exports = {
   TicketController,
   OrderController,
   NotificationController,
+  WishlistController,
 }

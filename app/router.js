@@ -10,6 +10,7 @@ const {
   TicketController,
   OrderController,
   NotificationController,
+  WishlistController,
 } = require("./controllers");
 const {
   User,
@@ -18,7 +19,8 @@ const {
   Airplane,
   Tickets,
   Orders,
-  Notifications
+  Notifications,
+  Wishlist
 } = require("./models");
 
 function apply(app) {
@@ -29,6 +31,7 @@ function apply(app) {
   const ticketsModel = Tickets;
   const ordersModel = Orders;
   const notificationsModel = Notifications;
+  const wishlistModel = Wishlist;
 
   const applicationController = new ApplicationController();
   const authenticationController = new AuthenticationController({ bcrypt, jwt, roleModel, userModel, });
@@ -37,6 +40,7 @@ function apply(app) {
   const ticketController = new TicketController({ ticketsModel, airplaneModel, airportModel, ordersModel, notificationsModel });
   const orderController = new OrderController({ ordersModel });
   const notificationController = new NotificationController({ notificationsModel });
+  const wishlistController = new WishlistController({ wishlistModel, ticketsModel });
 
   const accessControl = authenticationController.accessControl;
 
@@ -65,6 +69,11 @@ function apply(app) {
   app.get("/api/v1/orders", orderController.handleGetListOrder);
 
   app.get("/api/v1/Notifications", notificationController.handleGetNotificationList);
+
+  app.post("/api/v1/wishlists/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleCreateWishlist);
+  app.get("/api/v1/wishlists/:id", wishlistController.handleGetWishlistById);
+  app.get("/api/v1/wishlists", wishlistController.handleGetWishlistList);
+  app.delete("/api/v1/wishlists/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleDeleteWishlist);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);
