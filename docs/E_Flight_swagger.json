@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://localhost:3001/"
+      "url": "https://final-project-be-production-6de7.up.railway.app"
     }
   ],
   "tags": [
@@ -29,6 +29,14 @@
     {
       "name": "tickets",
       "description": "Related About Tickets"
+    },
+    {
+      "name": "notifications",
+      "description": "Related About Notifications"
+    },
+    {
+      "name": "orders",
+      "description": "Related About Orders"
     }
   ],
   "paths": {
@@ -746,7 +754,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only admin can access this page"
                     }
                   }
                 }
@@ -805,7 +813,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only  admin can access this page"
                     }
                   }
                 }
@@ -1087,7 +1095,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only  admin can access this page"
                     }
                   }
                 }
@@ -1206,7 +1214,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only admin can access this page"
                     }
                   }
                 }
@@ -1265,7 +1273,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only  admin can access this page"
                     }
                   }
                 }
@@ -1550,7 +1558,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only  admin can access this page"
                     }
                   }
                 }
@@ -1679,7 +1687,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only admin can access this page"
                     }
                   }
                 }
@@ -1738,7 +1746,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only  admin can access this page"
                     }
                   }
                 }
@@ -1788,6 +1796,14 @@
                         "arrival_time": {
                           "type": "string",
                           "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "return_time": {
+                          "type": "string",
+                          "example": "2022-010-22T08:36:55.584Z"
+                        },
+                        "arrival2_time": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
                         },
                         "price": {
                           "type": "integer",
@@ -1906,6 +1922,14 @@
                         "arrival_time": {
                           "type": "string",
                           "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "return_time": {
+                          "type": "string",
+                          "example": "2022-010-22T08:36:55.584Z"
+                        },
+                        "arrival2_time": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
                         },
                         "price": {
                           "type": "integer",
@@ -2101,6 +2125,14 @@
                           "type": "string",
                           "example": "2022-09-22T08:36:55.584Z"
                         },
+                        "return_time": {
+                          "type": "string",
+                          "example": "2022-010-22T08:36:55.584Z"
+                        },
+                        "arrival2_time": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
+                        },
                         "price": {
                           "type": "integer",
                           "format": "int64",
@@ -2160,7 +2192,123 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only admin can access this page"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tickets/{id}/order": {
+      "post": {
+        "tags": [
+          "tickets"
+        ],
+        "description": "To add the ordered ticket on the order table",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is order's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "userId",
+            "description": "this is user's id that make an order",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 13
+            }
+          },
+          {
+            "in": "query",
+            "name": "ticketId",
+            "description": "this is ordered ticket's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 4
+            }
+          },
+          {
+            "in": "query",
+            "name": "order_date",
+            "description": "this is ticket's ordered time/date",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "August 4, 23 10:20:18 GMT"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "if data successfully added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "massage": {
+                      "example": "order data added successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "userId": {
+                          "type": "integer",
+                          "example": 13
+                        },
+                        "ticketId": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "order_date": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "if doesnt have authority to create  data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "example": "Unauthorized Access"
                     }
                   }
                 }
@@ -2313,6 +2461,14 @@
                           "type": "string",
                           "example": "2022-09-22T08:36:55.584Z"
                         },
+                        "return_time": {
+                          "type": "string",
+                          "example": "2022-010-22T08:36:55.584Z"
+                        },
+                        "arrival2_time": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
+                        },
                         "price": {
                           "type": "integer",
                           "format": "int64",
@@ -2368,7 +2524,7 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only admin can access this page"
                     }
                   }
                 }
@@ -2383,7 +2539,7 @@
         "tags": [
           "tickets"
         ],
-        "description": "To delete the flight list on the flightList table",
+        "description": "To delete the ticket on the tickets table",
         "parameters": [
           {
             "in": "path",
@@ -2409,7 +2565,7 @@
                       "example": "Success"
                     },
                     "massage": {
-                      "example": "Success Delete flightList with id: 13, deleted by suAdmin"
+                      "example": "ticket deleted successfully"
                     }
                   }
                 }
@@ -2427,7 +2583,151 @@
                       "example": "Unauthorized Access"
                     },
                     "message": {
-                      "example": "only super admin and admin can access this page"
+                      "example": "only admin can access this page"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/notfications": {
+      "get": {
+        "tags": [
+          "notifications"
+        ],
+        "description": "To retrieve the list of existing notifications",
+        "responses": {
+          "200": {
+            "description": "if data successfully retrieve",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "massage": {
+                      "example": "get notifications list successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "orderId": {
+                          "type": "integer",
+                          "example": 2
+                        },
+                        "userId": {
+                          "type": "integer",
+                          "example": 13
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "if doesnt have authority to get  data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "example": "Unauthorized Access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/orders": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "description": "To retrieve the list of existing orders",
+        "responses": {
+          "200": {
+            "description": "if data successfully retrieve",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "massage": {
+                      "example": "get order list successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "userId": {
+                          "type": "integer",
+                          "example": 13
+                        },
+                        "ticketId": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "order_date": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "if doesnt have authority to get  data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "example": "Unauthorized Access"
                     }
                   }
                 }
