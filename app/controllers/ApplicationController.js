@@ -4,7 +4,7 @@ class ApplicationController {
   handleGetRoot = (req, res) => {
     res.status(200).json({
       status: "OK",
-      message: "BCR API is up and running!"
+      message: "E-Flight API is up and running!"
     });
   }
 
@@ -28,11 +28,11 @@ class ApplicationController {
         details: err.details,
       }
     })
-  } 
+  }
 
   getOffsetFromRequest(req) {
     const { page = 1, pageSize = 10 } = req.query;
-    const offset = (page - 1) * pageSize; 
+    const offset = (page - 1) * pageSize;
     return offset;
   }
 
