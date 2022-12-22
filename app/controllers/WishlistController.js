@@ -12,7 +12,6 @@ class WishlistController extends ApplicationController {
       const ticket = await this.getTicketFromRequest(req);
 
       const user = req.user.id;
-      console.log('id user: ', user);
 
       const wishlist = await this.wishlistModel.create({
         ticketId: ticket.id,
