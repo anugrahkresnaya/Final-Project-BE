@@ -17,7 +17,7 @@ describe("ApplicationController", () => {
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
         status: "OK",
-        message: "BCR API is up and running!",
+        message: "E-Flight API is up and running!",
       });
     });
   });
@@ -61,12 +61,12 @@ describe("ApplicationController", () => {
         json: jest.fn().mockReturnThis(),
       };
 
-      const mockNext =({})
+      const mockNext = ({})
 
       const err = new NotFoundError(mockRequest.method, mockRequest.url);
 
       const controller = new ApplicationController();
-      controller.handleError(err, mockRequest, mockResponse ,mockNext);
+      controller.handleError(err, mockRequest, mockResponse, mockNext);
 
       expect(mockResponse.status).toHaveBeenCalledWith(500);
       expect(mockResponse.json).toHaveBeenCalledWith({
