@@ -197,6 +197,7 @@ describe("AuthenticationController", () => {
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
+        id: expect.any(Number),
         message: expect.any(String),
         role: expect.any(String),
         status: expect.any(String),
