@@ -74,10 +74,10 @@ function apply(app) {
 
   app.get("/api/v1/Notifications", notificationController.handleGetNotificationList);
 
-  app.post("/api/v1/wishlists/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleCreateWishlist);
+  app.post("/api/v1/wishlists/add/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleCreateWishlist);
   app.get("/api/v1/wishlists/:id", wishlistController.handleGetWishlistById);
   app.get("/api/v1/wishlists", wishlistController.handleGetWishlistList);
-  app.delete("/api/v1/wishlists/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleDeleteWishlist);
+  app.delete("/api/v1/wishlists/delete/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleDeleteWishlist);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);

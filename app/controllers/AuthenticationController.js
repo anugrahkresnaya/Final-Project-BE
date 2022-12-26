@@ -76,6 +76,7 @@ class AuthenticationController extends ApplicationController {
       res.status(201).json({
         status: "OK",
         message: "Success Login",
+        id:user.id,
         user: user.email,
         role: user.Role.name,
         accessToken,
