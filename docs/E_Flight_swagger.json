@@ -2730,7 +2730,7 @@
         }
       }
     },
-    "/api/v1/history": {
+    "/api/v1/histories": {
       "get": {
         "tags": [
           "orders"
