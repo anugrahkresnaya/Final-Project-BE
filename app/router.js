@@ -9,6 +9,7 @@ const {
   AirplaneController,
   TicketController,
   OrderController,
+  HistoryController,
   NotificationController,
   WishlistController,
 } = require("./controllers");
@@ -39,6 +40,7 @@ function apply(app) {
   const airplaneController = new AirplaneController({ airplaneModel });
   const ticketController = new TicketController({ ticketsModel, airplaneModel, airportModel, ordersModel, notificationsModel });
   const orderController = new OrderController({ ordersModel });
+  const historyController = new HistoryController({ ordersModel });
   const notificationController = new NotificationController({ notificationsModel });
   const wishlistController = new WishlistController({ wishlistModel, ticketsModel });
 
@@ -67,6 +69,8 @@ function apply(app) {
   app.post("/api/v1/tickets/:id/order", authenticationController.authorize(accessControl.CUSTOMER), ticketController.handleOrderTicket);
 
   app.get("/api/v1/orders", orderController.handleGetListOrder);
+  app.get("/api/v1/histories", historyController.handleGetListHistory);
+  app.get("/api/v1/history/:id", historyController.handleGetHistoryById);
 
   app.get("/api/v1/Notifications", notificationController.handleGetNotificationList);
 
