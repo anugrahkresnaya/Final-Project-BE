@@ -26,7 +26,7 @@ class TicketController extends ApplicationController {
 
   handleCreateTicket = async (req, res) => {
     try {
-      const {
+      let {
         departure_time,
         arrival_time,
         return_time,
@@ -36,15 +36,26 @@ class TicketController extends ApplicationController {
         origin,
         destination
       } = req.body;
+      console.log('return_time : ', return_time)
+      console.log('arrival2: ', arrival2_time)
 
       const airplane = await this.airplaneModel.findByPk(generateRandomInt());
       const airplaneName = airplane.dataValues.name;
 
+      if (return_time !== undefined) {
+        return_time = new Date(return_time)
+      }
+
+      if (arrival2_time !== undefined) {
+        arrival2_time = new Date(arrival2_time)
+        
+      }
+
       const ticket = await this.ticketsModel.create({
         departure_time: new Date(departure_time),
         arrival_time: new Date(arrival_time),
-        return_time: new Date(return_time),
-        arrival2_time: new Date(arrival2_time),
+        return_time: return_time,
+        arrival2_time: arrival2_time,
         price,
         category,
         airplane_name: airplaneName,
