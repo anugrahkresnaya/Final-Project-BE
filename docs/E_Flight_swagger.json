@@ -372,7 +372,7 @@
         }
       }
     },
-    "/api/users/": {
+    "/api/v1/users/": {
       "get": {
         "tags": [
           "users"
@@ -474,7 +474,7 @@
         }
       }
     },
-    "/api/users/{id}": {
+    "/api/v1/users/{id}": {
       "get": {
         "tags": [
           "users"
@@ -588,7 +588,7 @@
         }
       }
     },
-    "/api/users/update/{id}": {
+    "/api/v1/users/update/{id}": {
       "put": {
         "tags": [
           "users"
@@ -745,65 +745,6 @@
           },
           "401": {
             "description": "if doesnt have authority to update  data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "example": "Unauthorized Access"
-                    },
-                    "message": {
-                      "example": "invalid token"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/users/delete/{id}": {
-      "delete": {
-        "tags": [
-          "users"
-        ],
-        "description": "To delete the user on the users table",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "description": "this is user id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "if data successfully deleted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "massage": {
-                      "example": "user data deleted successfully"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "if doesnt have authority to delete data",
             "content": {
               "application/json": {
                 "schema": {
