@@ -1,9 +1,8 @@
-
 const NotificationController = require("../NotificationController");
 
 describe("NotificationController", () => {
     describe("#handleGetNotificationList", () => {
-        it("should call res.status(200) and res.json with airplane data", async () => {
+        it("should call res.status(200) and res.json with notifications data", async () => {
           const mockRequest = {}
     
           const mockResponse = {
@@ -15,8 +14,8 @@ describe("NotificationController", () => {
     
           const mockNotif = {
             'id': 1,
-            'orderId': '2',
-            'userId': '3',
+            'orderId': 2,
+            'userId': 3,
             'createdAt': '2022-11-17T05:11:01.429Z',
             'updatedAt': '2022-11-17T05:11:01.429Z',
           };
