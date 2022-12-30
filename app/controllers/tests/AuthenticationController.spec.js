@@ -5,9 +5,11 @@ const {
   NotFoundError,
   InsufficientAccessError,
   EmailNotRegisteredError,
+  ApiError,
 } = require("../../errors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const httpStatus = require('http-status');
 
 describe("AuthenticationController", () => {
   describe("#constructorAuthenticationController", () => {
@@ -197,7 +199,7 @@ describe("AuthenticationController", () => {
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
-        id: expect.any(Number),
+        id:mockUser.id,
         message: expect.any(String),
         role: expect.any(String),
         status: expect.any(String),
@@ -453,6 +455,47 @@ describe("AuthenticationController", () => {
         accessToken: expect.any(String),
       });
     });
+    it("should return status 422  and error message", async () => {
+      const err = new ApiError(httpStatus.BAD_REQUEST, "email cannot be empty");
+      const name = "fendy";
+      const email = "";
+      const password = "123456";
+
+      const mockRole = new Role({ id: 1, name: "CUSTOMER" });
+
+      const mockUserModel = {
+        findOne: jest.fn().mockReturnValue(null),
+        create: jest.fn().mockReturnValue(err),
+      };
+
+      const mockRoleModel = {
+        findOne: jest.fn().mockReturnValue(mockRole.name),
+      };
+
+      const mockRequest = {
+        body: {
+          name,
+          email,
+          password,
+        },
+      };
+      const mockResponse = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+      };
+      const mockNext = {};
+
+      const authentication = new AuthenticationController({
+        userModel: mockUserModel,
+        roleModel: mockRoleModel,
+        bcrypt,
+        jwt,
+      });
+
+      await authentication.handleRegister(mockRequest, mockResponse, mockNext);
+      expect(mockResponse.status).toHaveBeenCalledWith(422);
+      expect(mockResponse.json).toHaveBeenCalledWith(err);
+    });
   });
 
   describe("handleGetUser", () => {
@@ -549,7 +592,6 @@ describe("AuthenticationController", () => {
       }
     );
   });
-
   describe("#handleGetUserById", () => {
     it("should call res.status(200) and res.json with user instance", async () => {
       const mockRequest = {
@@ -617,7 +659,6 @@ describe("AuthenticationController", () => {
       expect(user).toEqual(1);
     });
   });
-
   describe("#createTokenFromUser", () => {
     it("should return token", () => {
       const mockUser = new User({

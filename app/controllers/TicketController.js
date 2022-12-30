@@ -1,12 +1,12 @@
 const ApplicationController = require('./ApplicationController');
 
-const generateRandomInt = (min = 1, max = 5) => {
-  let diff = max - min;
-  let random = Math.random();
-  random = Math.floor(random * diff);
-  random = random + min;
-  return random;
-}
+// const generateRandomInt = (min = 1, max = 5) => {
+//   let diff = max - min;
+//   let random = Math.random();
+//   random = Math.floor(random * diff);
+//   random = random + min;
+//   return random;
+// }
 
 class TicketController extends ApplicationController {
   constructor({
@@ -33,14 +33,15 @@ class TicketController extends ApplicationController {
         arrival2_time,
         price,
         category,
+        airplane_name,
         origin,
-        destination
+        destination,
       } = req.body;
       console.log('return_time : ', return_time)
       console.log('arrival2: ', arrival2_time)
 
-      const airplane = await this.airplaneModel.findByPk(generateRandomInt());
-      const airplaneName = airplane.dataValues.name;
+      // const airplane = await this.airplaneModel.findByPk(generateRandomInt());
+      // const airplaneName = airplane.dataValues.name;
 
       if (return_time !== undefined) {
         return_time = new Date(return_time)
@@ -58,13 +59,13 @@ class TicketController extends ApplicationController {
         arrival2_time: arrival2_time,
         price,
         category,
-        airplane_name: airplaneName,
+        airplane_name,
         origin,
         destination,
-        createdBy: req.user.id,
+        createdBy : req.user.id,
       });
 
-      res.status(201).json({
+      res.status(200).json({
         status: 'success',
         message: 'Ticket data added successfully',
         data: ticket,
@@ -94,6 +95,8 @@ class TicketController extends ApplicationController {
       const {
         departure_time,
         arrival_time,
+        return_time,
+        arrival2_time,
         price,
         category,
         origin,
@@ -105,6 +108,8 @@ class TicketController extends ApplicationController {
       await ticket.update({
         departure_time,
         arrival_time,
+        return_time,
+        arrival2_time,
         price,
         category,
         origin,

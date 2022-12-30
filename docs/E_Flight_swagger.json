@@ -1250,7 +1250,7 @@
                           "type": "string",
                           "example": "Soekarno Hatta Airport"
                         },
-                        "code": {
+                        "city": {
                           "type": "string",
                           "example": "Jakarta"
                         },
@@ -1339,7 +1339,7 @@
                           "type": "string",
                           "example": "Soekarno Hatta Airport"
                         },
-                        "code": {
+                        "city": {
                           "type": "string",
                           "example": "Jakarta"
                         },
@@ -1458,7 +1458,7 @@
                           "type": "string",
                           "example": "Soekarno Hatta Airport"
                         },
-                        "code": {
+                        "city": {
                           "type": "string",
                           "example": "Jakarta"
                         },
@@ -1587,7 +1587,7 @@
                           "type": "string",
                           "example": "Soekarno Hatta Airport"
                         },
-                        "code": {
+                        "city": {
                           "type": "string",
                           "example": "Jakarta"
                         },
