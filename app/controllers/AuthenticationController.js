@@ -76,6 +76,7 @@ class AuthenticationController extends ApplicationController {
       res.status(201).json({
         status: "OK",
         message: "Success Login",
+        id: user.id,
         user: user.email,
         role: user.Role.name,
         accessToken,
@@ -249,6 +250,16 @@ class AuthenticationController extends ApplicationController {
       message: "get user data successful",
       data : user
       });
+  }
+
+  handleGetUserById = async (req, res) => {
+    const user = await this.getUserFromRequest(req);
+
+    res.status(200).json({
+      status: "success",
+      message: "get user by id successful",
+      data: user,
+    })
   }
 
   handleListUser = async (req, res) => {

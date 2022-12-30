@@ -107,6 +107,7 @@ describe("AirplaneController", () => {
         data: mockAirplane
       });
     });
+    
   });
 
   describe("#handleUpdateAirplane", () => {
@@ -150,6 +151,7 @@ describe("AirplaneController", () => {
         data: mockAirplane
       });
     });
+    
   });
 
   describe("#handleDeleteAirplane", () => {

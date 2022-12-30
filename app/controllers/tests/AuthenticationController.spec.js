@@ -5,9 +5,11 @@ const {
   NotFoundError,
   InsufficientAccessError,
   EmailNotRegisteredError,
+  ApiError,
 } = require("../../errors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const httpStatus = require('http-status');
 
 describe("AuthenticationController", () => {
   describe("#constructorAuthenticationController", () => {
@@ -197,6 +199,7 @@ describe("AuthenticationController", () => {
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({
         accessToken: expect.any(String),
+        id:mockUser.id,
         message: expect.any(String),
         role: expect.any(String),
         status: expect.any(String),
@@ -452,6 +455,47 @@ describe("AuthenticationController", () => {
         accessToken: expect.any(String),
       });
     });
+    it("should return status 422  and error message", async () => {
+      const err = new ApiError(httpStatus.BAD_REQUEST, "email cannot be empty");
+      const name = "fendy";
+      const email = "";
+      const password = "123456";
+
+      const mockRole = new Role({ id: 1, name: "CUSTOMER" });
+
+      const mockUserModel = {
+        findOne: jest.fn().mockReturnValue(null),
+        create: jest.fn().mockReturnValue(err),
+      };
+
+      const mockRoleModel = {
+        findOne: jest.fn().mockReturnValue(mockRole.name),
+      };
+
+      const mockRequest = {
+        body: {
+          name,
+          email,
+          password,
+        },
+      };
+      const mockResponse = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis(),
+      };
+      const mockNext = {};
+
+      const authentication = new AuthenticationController({
+        userModel: mockUserModel,
+        roleModel: mockRoleModel,
+        bcrypt,
+        jwt,
+      });
+
+      await authentication.handleRegister(mockRequest, mockResponse, mockNext);
+      expect(mockResponse.status).toHaveBeenCalledWith(422);
+      expect(mockResponse.json).toHaveBeenCalledWith(err);
+    });
   });
 
   describe("handleGetUser", () => {
@@ -548,7 +592,73 @@ describe("AuthenticationController", () => {
       }
     );
   });
+  describe("#handleGetUserById", () => {
+    it("should call res.status(200) and res.json with user instance", async () => {
+      const mockRequest = {
+        params: {
+          id: 1
+        }
+      };
 
+      const mockResponse = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn().mockReturnThis()
+      }
+
+      const mockUser = {
+        "id": 1,
+        "noKtp": "1218022302040069",
+        "username": "fndys",
+        "name": "Fendy",
+        "contact": "08960342601",
+        "gender": "pria",
+        "dateOfBirth": "2002-02-23T00:00:00.000Z",
+        "address": "Jl. Kapten Tsubasa, Medan",
+        "photoProfile": "https://res.cloudinary.com/dd93u8fa5/image/upload/v1671182747/Binar%20Academy/monyet_esp40t.jpg",
+        "email": "fendy@binar.co.id",
+        "encryptedPassword": "$2a$10$AhK/GApn.az3.PrrGus8Xe7s1ndg/E64BDlvTr8X8AuAnD82tRh/i",
+        "roleId": 1,
+        "createdAt": "2022-12-12T15:13:25.990Z",
+        "updatedAt": "2022-12-12T15:13:25.990Z"
+      }
+
+      const mockUserModel = {
+        findByPk: jest.fn().mockReturnValue(mockUser)
+      };
+
+      const authController = new AuthenticationController({ userModel: mockUserModel });
+      await authController.handleGetUserById(mockRequest, mockResponse);
+
+      expect(mockUserModel.findByPk).toHaveBeenCalledWith(1);
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        status: "success",
+        message: "get user by id successful",
+        data: mockUser
+      })
+    });
+  });
+
+  describe("#getUserFromRequest", () => {
+    it("should return user id", async () => {
+      const mockRequest = {
+        params: {
+          id: 1,
+        },
+      };
+
+      const mockUser = 1;
+
+      const mockUserModel = {
+        findByPk: jest.fn().mockReturnValue(mockUser)
+      };
+
+      const authController = new AuthenticationController({ userModel: mockUserModel });
+      const user = authController.getUserFromRequest(mockRequest);
+
+      expect(user).toEqual(1);
+    });
+  });
   describe("#createTokenFromUser", () => {
     it("should return token", () => {
       const mockUser = new User({

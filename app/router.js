@@ -74,16 +74,18 @@ function apply(app) {
 
   app.get("/api/v1/Notifications", notificationController.handleGetNotificationList);
 
-  app.post("/api/v1/wishlists/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleCreateWishlist);
+  app.post("/api/v1/wishlists/add/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleCreateWishlist);
   app.get("/api/v1/wishlists/:id", wishlistController.handleGetWishlistById);
   app.get("/api/v1/wishlists", wishlistController.handleGetWishlistList);
-  app.delete("/api/v1/wishlists/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleDeleteWishlist);
+  app.delete("/api/v1/wishlists/delete/:id", authenticationController.authorize(accessControl.CUSTOMER), wishlistController.handleDeleteWishlist);
 
   app.post("/api/auth/login", authenticationController.handleLogin);
   app.post("/api/auth/register", authenticationController.handleRegister);
   app.get("/api/auth/user", authenticationController.authorize(), authenticationController.handleGetUser);
+  
+  app.get("/api/v1/users/:id", authenticationController.authorize(), authenticationController.handleGetUserById)
   app.get("/api/v1/users", authenticationController.handleListUser);
-  app.put("/api/v1/user/update/:id", uploader.single("photoProfile"), authenticationController.handleUpdateUser);
+  app.put("/api/v1/users/update/:id", uploader.single("photoProfile"), authenticationController.handleUpdateUser);
 
   app.use(applicationController.handleNotFound);
   app.use(applicationController.handleError);

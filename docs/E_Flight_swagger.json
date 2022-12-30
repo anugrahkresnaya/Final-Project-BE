@@ -35,12 +35,8 @@
       "description": "Related About Wishlists"
     },
     {
-      "name": "notifications",
-      "description": "Related About Notifications"
-    },
-    {
       "name": "orders",
-      "description": "Related About Orders"
+      "description": "Related About Orders, histories, and notifications"
     }
   ],
   "paths": {
@@ -376,7 +372,7 @@
         }
       }
     },
-    "/api/users/": {
+    "/api/v1/users/": {
       "get": {
         "tags": [
           "users"
@@ -478,7 +474,7 @@
         }
       }
     },
-    "/api/users/{id}": {
+    "/api/v1/users/{id}": {
       "get": {
         "tags": [
           "users"
@@ -592,7 +588,7 @@
         }
       }
     },
-    "/api/users/update/{id}": {
+    "/api/v1/users/update/{id}": {
       "put": {
         "tags": [
           "users"
@@ -768,66 +764,7 @@
         }
       }
     },
-    "/api/users/delete/{id}": {
-      "delete": {
-        "tags": [
-          "users"
-        ],
-        "description": "To delete the user on the users table",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "description": "this is user id",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "example": 1
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "if data successfully deleted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "massage": {
-                      "example": "user data deleted successfully"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "if doesnt have authority to delete data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "example": "Unauthorized Access"
-                    },
-                    "message": {
-                      "example": "invalid token"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/airplane/": {
+    "/api/airplanes/": {
       "get": {
         "tags": [
           "airplanes"
@@ -851,37 +788,30 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "cars": {
-                          "type": "array",
-                          "items": {
-                            "properties": {
-                              "id": {
-                                "type": "integer",
-                                "format": "int64",
-                                "example": 1
-                              },
-                              "name": {
-                                "type": "string",
-                                "example": "Garuda Indonesia"
-                              },
-                              "code": {
-                                "type": "string",
-                                "example": "GIA"
-                              },
-                              "country": {
-                                "type": "string",
-                                "example": "Indonesia"
-                              },
-                              "createdAt": {
-                                "type": "string",
-                                "example": "2022-10-22T08:36:55.584Z"
-                              },
-                              "updatedAt": {
-                                "type": "string",
-                                "example": "2022-10-22T08:36:55.584Z"
-                              }
-                            }
-                          }
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Garuda Indonesia"
+                        },
+                        "code": {
+                          "type": "string",
+                          "example": "GIA"
+                        },
+                        "country": {
+                          "type": "string",
+                          "example": "Indonesia"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-10-22T08:36:55.584Z"
                         }
                       }
                     }
@@ -1320,7 +1250,7 @@
                           "type": "string",
                           "example": "Soekarno Hatta Airport"
                         },
-                        "code": {
+                        "city": {
                           "type": "string",
                           "example": "Jakarta"
                         },
@@ -1364,7 +1294,7 @@
         }
       }
     },
-    "/api/v1/airport/{id}": {
+    "/api/v1/airports/{id}": {
       "get": {
         "tags": [
           "airports"
@@ -1409,7 +1339,7 @@
                           "type": "string",
                           "example": "Soekarno Hatta Airport"
                         },
-                        "code": {
+                        "city": {
                           "type": "string",
                           "example": "Jakarta"
                         },
@@ -1453,7 +1383,7 @@
         }
       }
     },
-    "/api/v1/airport/add": {
+    "/api/v1/airports/add": {
       "post": {
         "tags": [
           "airports"
@@ -1528,7 +1458,7 @@
                           "type": "string",
                           "example": "Soekarno Hatta Airport"
                         },
-                        "code": {
+                        "city": {
                           "type": "string",
                           "example": "Jakarta"
                         },
@@ -1572,7 +1502,7 @@
         }
       }
     },
-    "/api/v1/airport/update/{id}": {
+    "/api/v1/airports/update/{id}": {
       "put": {
         "tags": [
           "airports"
@@ -1657,7 +1587,7 @@
                           "type": "string",
                           "example": "Soekarno Hatta Airport"
                         },
-                        "code": {
+                        "city": {
                           "type": "string",
                           "example": "Jakarta"
                         },
@@ -2600,7 +2530,7 @@
     "/api/v1/notfications": {
       "get": {
         "tags": [
-          "notifications"
+          "orders"
         ],
         "description": "To retrieve the list of existing notifications",
         "responses": {
@@ -2687,6 +2617,166 @@
                     },
                     "massage": {
                       "example": "get order list successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "userId": {
+                          "type": "integer",
+                          "example": 13
+                        },
+                        "ticketId": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "order_date": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "if doesnt have authority to get  data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "example": "Unauthorized Access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/histories": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "description": "To retrieve the list of existing history",
+        "responses": {
+          "200": {
+            "description": "if data successfully retrieve",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "massage": {
+                      "example": "Successfully get history list"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "example": 1
+                        },
+                        "userId": {
+                          "type": "integer",
+                          "example": 13
+                        },
+                        "ticketId": {
+                          "type": "integer",
+                          "example": 4
+                        },
+                        "order_date": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "example": "2022-09-22T08:36:55.584Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "if doesnt have authority to get  data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "example": "Unauthorized Access"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/history/{id}": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "description": "To retrieve the list of existing history by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "this is history's id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "if data successfully retrieve",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "massage": {
+                      "example": "History data fetched successfully"
                     },
                     "data": {
                       "type": "object",
