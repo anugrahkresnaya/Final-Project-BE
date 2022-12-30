@@ -12,7 +12,7 @@ class NotificationController extends ApplicationController {
 
     res.status(200).json({
       status: 'success',
-      message: 'Successfully get order list',
+      message: 'Successfully get notification list',
       data: notifications,
     });
   }
