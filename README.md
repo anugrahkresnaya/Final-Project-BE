@@ -10,6 +10,8 @@ The repository has made with ESlint, making unit tests by ```jest and supertest`
 ### Running public app
 Access this app on https://final-project-be-production-6de7.up.railway.app/
 
+### API Endpoint Documentation
+Access this documentation on https://final-project-be-production-6de7.up.railway.app/documentation/
 
 ### Running local app
 ```
