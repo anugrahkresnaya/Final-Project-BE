@@ -1999,6 +1999,16 @@
           },
           {
             "in": "query",
+            "name": "airplane_name",
+            "description": "this is ticket's Airplane",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Garuda Indonesia"
+            }
+          },
+          {
+            "in": "query",
             "name": "origin,",
             "description": "this is ticket's departure city",
             "required": true,
@@ -2327,6 +2337,16 @@
             "schema": {
               "type": "string",
               "example": "one way"
+            }
+          },
+          {
+            "in": "query",
+            "name": "airplane_name",
+            "description": "this is ticket's airplane",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Garuda Indonesia"
             }
           },
           {
